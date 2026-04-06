@@ -131,10 +131,25 @@ function AnimateIn({ children, delay = 0, style = {} }) {
 export default function NehemiahLanding() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [chargeProgress, setChargeProgress] = useState(67);
+  const [loyaltyCount, setLoyaltyCount] = useState(7);
+  const [points, setPoints] = useState(2840);
 
   useEffect(() => {
     const timer = setInterval(() => setActiveTestimonial((p) => (p + 1) % TESTIMONIALS.length), 5000);
     return () => clearInterval(timer);
+  }, []);
+
+  // Animate charging progress
+  useEffect(() => {
+    const t = setInterval(() => setChargeProgress(p => p >= 95 ? 67 : p + 1), 2500);
+    return () => clearInterval(t);
+  }, []);
+
+  // Animate points counting up
+  useEffect(() => {
+    const t = setInterval(() => setPoints(p => p >= 3200 ? 2840 : p + Math.floor(Math.random() * 15 + 5)), 4000);
+    return () => clearInterval(t);
   }, []);
 
   return (
@@ -144,6 +159,8 @@ export default function NehemiahLanding() {
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
         @keyframes pulse-ring { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.8); opacity: 0; } }
         @keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes shimmer { 0% { transform: translateX(-200%); } 100% { transform: translateX(200%); } }
+        @keyframes pulse-dot { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
         .nav-link { color: #888; text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
         .nav-link:hover { color: #fff; }
         .cta-primary { background: linear-gradient(135deg, #4CAF50, #2E7D32); border: none; color: #fff; padding: 14px 32px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
@@ -221,54 +238,135 @@ export default function NehemiahLanding() {
             </div>
           </AnimateIn>
 
-          {/* Phone mockup */}
+          {/* Phone mockup - White theme NehHome */}
           <AnimateIn delay={0.5}>
             <div style={{ marginTop: 60, position: "relative", display: "inline-block", animation: "float 6s ease-in-out infinite" }}>
               <div style={{
-                width: 260, height: 520, borderRadius: 36, background: "linear-gradient(180deg, #111 0%, #0a0a0a 100%)",
-                border: "2px solid rgba(255,255,255,0.08)", position: "relative", overflow: "hidden",
-                boxShadow: "0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(76,175,80,0.1)"
+                width: 280, height: 560, borderRadius: 36, background: "#F4F5F7",
+                border: "2px solid rgba(255,255,255,0.15)", position: "relative", overflow: "hidden",
+                boxShadow: "0 40px 80px rgba(0,0,0,0.5), 0 0 60px rgba(76,175,80,0.1)",
+                fontFamily: "'Space Grotesk', system-ui, sans-serif",
               }}>
-                {/* Status bar */}
-                <div style={{ padding: "12px 20px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 12, fontWeight: 600 }}>9:41</span>
-                  <div style={{ display: "flex", gap: 4 }}>
-                    <div style={{ width: 16, height: 10, border: "1px solid #fff", borderRadius: 2, position: "relative" }}>
-                      <div style={{ position: "absolute", inset: 2, background: "#4CAF50", borderRadius: 1 }} />
+                {/* Dark hero header */}
+                <div style={{ background: "linear-gradient(170deg, #010F12 0%, #0a1a1e 50%, #0e2218 100%)", borderRadius: "0 0 20px 20px", padding: "14px 16px 16px" }}>
+                  {/* Status bar */}
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                    <span style={{ fontSize: 10, fontWeight: 600, color: "#fff" }}>9:41</span>
+                    <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+                      <div style={{ width: 14, height: 8, border: "1px solid #fff", borderRadius: 2, position: "relative" }}>
+                        <div style={{ position: "absolute", inset: 1.5, background: "#1bf561", borderRadius: 1 }} />
+                      </div>
                     </div>
+                  </div>
+                  {/* Nav row */}
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ width: 30, height: 30, borderRadius: 9, background: "rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" /><path d="M4 20c0-3.31 3.58-6 8-6s8 2.69 8 6" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5" strokeLinecap="round" /></svg>
+                      </div>
+                      <div>
+                        <div style={{ color: "#8A9BA0", fontSize: 8 }}>Good morning</div>
+                        <div style={{ color: "#fff", fontSize: 12, fontWeight: 700 }}>Kwame</div>
+                      </div>
+                    </div>
+                    <div style={{ background: "rgba(27,245,97,0.06)", border: "1px solid rgba(27,245,97,0.1)", borderRadius: 6, padding: "3px 6px", display: "flex", alignItems: "center", gap: 2 }}>
+                      <svg width="7" height="7" viewBox="148 148 260 300" fill="none"><polygon fill="#1bf561" points="406.16 148.62 344.47 319.38 324.56 374.46 252.37 280.73 271.26 231.17 311.14 279.16" /><polygon fill="#fff" points="265.19 342.22 189.11 446.65 240.92 310.73 265.19 342.22" /></svg>
+                      <span style={{ color: "#1bf561", fontSize: 8, fontWeight: 700, transition: "all 0.3s" }}>{points.toLocaleString()}</span>
+                    </div>
+                  </div>
+                  {/* Station info */}
+                  <div style={{ display: "flex", gap: 10 }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ color: "#1bf561", fontSize: 6, fontWeight: 700, letterSpacing: 1.5, marginBottom: 3 }}>NEAREST STATION</div>
+                      <div style={{ color: "#fff", fontSize: 18, fontWeight: 800, lineHeight: 1, letterSpacing: -0.5, marginBottom: 4 }}>Nehemiah<br />Gate</div>
+                      <div style={{ color: "#8A9BA0", fontSize: 8, marginBottom: 5 }}>Haatso · 0.8 km</div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 3 }}>
+                        <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#1bf561" }} />
+                        <span style={{ color: "#1bf561", fontSize: 8, fontWeight: 600 }}>Open Now</span>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 4, width: 65 }}>
+                      {[{ v: "120", u: "kW" }, { v: "2", u: "Free" }, { v: "6.50", u: "GHS" }].map((s, i) => (
+                        <div key={i} style={{ background: "rgba(27,245,97,0.04)", borderRadius: 7, padding: "5px 0", textAlign: "center", border: "1px solid rgba(27,245,97,0.08)" }}>
+                          <span style={{ color: "#1bf561", fontSize: 12, fontWeight: 800 }}>{s.v}</span>
+                          <span style={{ color: "#8A9BA0", fontSize: 6, marginLeft: 2 }}>{s.u}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {/* CTA with shimmer */}
+                  <div style={{ position: "relative", overflow: "hidden", borderRadius: 10, background: "linear-gradient(135deg, #1BF561, #00AC69)", padding: "9px 0", textAlign: "center", marginTop: 12, boxShadow: "0 3px 12px rgba(27,245,97,0.25)" }}>
+                    <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", background: "linear-gradient(110deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%)", animation: "shimmer 3s linear infinite", pointerEvents: "none" }} />
+                    <span style={{ color: "#010F12", fontSize: 10, fontWeight: 700, position: "relative" }}>Start Charging</span>
                   </div>
                 </div>
 
-                {/* App screen content */}
-                <div style={{ padding: 20 }}>
-                  <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 4 }}>Good morning</div>
-                  <div style={{ fontSize: 12, color: "#888", marginBottom: 20 }}>3 stations nearby</div>
-
-                  {/* Map placeholder */}
-                  <div style={{ width: "100%", height: 140, borderRadius: 16, background: "linear-gradient(135deg, #1a2f1a, #0d1f0d)", marginBottom: 16, position: "relative", overflow: "hidden" }}>
-                    <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-                      <div style={{ width: 24, height: 24, borderRadius: "50%", background: "rgba(76,175,80,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                        <div style={{ width: 10, height: 10, borderRadius: "50%", background: "#4CAF50" }} />
+                {/* Light body */}
+                <div style={{ padding: "10px 14px" }}>
+                  {/* Active charging card */}
+                  <div style={{ background: "#fff", borderRadius: 12, padding: "10px 10px", marginBottom: 8, border: "1px solid #E4E7EB" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div style={{ position: "relative", width: 32, height: 32 }}>
+                        <svg width="32" height="32" viewBox="0 0 32 32">
+                          <circle cx="16" cy="16" r="12" fill="none" stroke="#E4E7EB" strokeWidth="2" />
+                          <circle cx="16" cy="16" r="12" fill="none" stroke="#1bf561" strokeWidth="2" strokeDasharray={2 * Math.PI * 12} strokeDashoffset={2 * Math.PI * 12 * (1 - chargeProgress / 100)} strokeLinecap="round" transform="rotate(-90 16 16)" style={{ transition: "stroke-dashoffset 1s" }} />
+                        </svg>
+                        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <span style={{ color: "#0D9E3A", fontSize: 7, fontWeight: 800 }}>{chargeProgress}%</span>
+                        </div>
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                          <span style={{ color: "#0B1215", fontSize: 10, fontWeight: 700 }}>Charging</span>
+                          <div style={{ width: 4, height: 4, borderRadius: "50%", background: "#1bf561", animation: "pulse-dot 2s ease-in-out infinite" }} />
+                        </div>
+                        <div style={{ color: "#8A9BA0", fontSize: 8, marginTop: 1 }}>Gun A · {(chargeProgress * 0.45).toFixed(1)} kWh</div>
                       </div>
                     </div>
-                    {/* Station dots */}
-                    {[[30, 40], [75, 60], [60, 25]].map(([l, t], i) => (
-                      <div key={i} style={{ position: "absolute", left: `${l}%`, top: `${t}%`, width: 8, height: 8, borderRadius: "50%", background: "#4CAF50", border: "2px solid #0d1f0d" }} />
+                  </div>
+
+                  {/* Quick actions */}
+                  <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
+                    {[
+                      { label: "Charge", green: true },
+                      { label: "Rewards", green: false },
+                      { label: "History", green: false },
+                    ].map((a, i) => (
+                      <div key={i} style={{ flex: 1, background: a.green ? "#010F12" : "#fff", borderRadius: 10, padding: "8px 0", textAlign: "center", border: "1px solid " + (a.green ? "rgba(27,245,97,0.08)" : "#E4E7EB") }}>
+                        <div style={{ width: 22, height: 22, borderRadius: 7, background: a.green ? "linear-gradient(135deg, #1BF561, #00AC69)" : "rgba(27,245,97,0.10)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 3px" }}>
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke={a.green ? "#010F12" : "#0D9E3A"} strokeWidth="2" strokeLinejoin="round" /></svg>
+                        </div>
+                        <span style={{ color: a.green ? "#1bf561" : "#0B1215", fontSize: 8, fontWeight: 600 }}>{a.label}</span>
+                      </div>
                     ))}
                   </div>
 
-                  {/* Station card */}
-                  <div style={{ background: "rgba(255,255,255,0.04)", borderRadius: 14, padding: 14, border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start", marginBottom: 8 }}>
-                      <div>
-                        <div style={{ fontSize: 13, fontWeight: 600 }}>Labone Station</div>
-                        <div style={{ fontSize: 10, color: "#888" }}>0.8 km away</div>
-                      </div>
-                      <div style={{ background: "rgba(76,175,80,0.15)", padding: "3px 8px", borderRadius: 6, fontSize: 10, color: "#4CAF50", fontWeight: 600 }}>Available</div>
+                  {/* Loyalty bar */}
+                  <div style={{ background: "#fff", borderRadius: 10, padding: "8px 10px", border: "1px solid #E4E7EB", marginBottom: 8 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 5 }}>
+                      <span style={{ color: "#0D9E3A", fontSize: 7, fontWeight: 700, letterSpacing: 0.8 }}>CHARGE 10. WE DASH YOU.</span>
+                      <span style={{ color: "#0D9E3A", fontSize: 10, fontWeight: 800 }}>7/10</span>
                     </div>
-                    <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
-                      <div style={{ flex: 1, background: "#4CAF50", borderRadius: 8, padding: "8px 0", textAlign: "center", fontSize: 11, fontWeight: 600 }}>Navigate</div>
-                      <div style={{ flex: 1, background: "rgba(255,255,255,0.06)", borderRadius: 8, padding: "8px 0", textAlign: "center", fontSize: 11, fontWeight: 500, color: "#ccc" }}>Details</div>
+                    <div style={{ display: "flex", gap: 2 }}>
+                      {Array.from({ length: 10 }).map((_, i) => (
+                        <div key={i} style={{ flex: 1, height: 4, borderRadius: 2, background: i < 7 ? "#1bf561" : "#E4E7EB" }} />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Station card */}
+                  <div style={{ background: "#fff", borderRadius: 10, padding: "8px 10px", border: "1px solid #E4E7EB" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 6 }}>
+                      <div style={{ width: 22, height: 22, borderRadius: 6, background: "#010F12", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <svg width="10" height="10" viewBox="148 148 260 300" fill="none"><polygon fill="#1bf561" points="406.16 148.62 344.47 319.38 324.56 374.46 252.37 280.73 271.26 231.17 311.14 279.16" /><polygon fill="#fff" points="265.19 342.22 189.11 446.65 240.92 310.73 265.19 342.22" /></svg>
+                      </div>
+                      <div>
+                        <div style={{ color: "#0B1215", fontSize: 9, fontWeight: 700 }}>Nehemiah Gate - Haatso</div>
+                        <div style={{ color: "#8A9BA0", fontSize: 7 }}>0.8 km · 2 guns free</div>
+                      </div>
+                    </div>
+                    <div style={{ padding: "5px 0", borderRadius: 6, textAlign: "center", background: "#010F12" }}>
+                      <span style={{ color: "#1bf561", fontSize: 8, fontWeight: 700 }}>Navigate</span>
                     </div>
                   </div>
                 </div>
