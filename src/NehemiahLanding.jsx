@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import logoMark from "./assets/logo-mark.svg";
 import logoFull from "./assets/logo-full.svg";
 
@@ -608,9 +609,13 @@ export default function NehemiahLanding() {
             <span style={{ fontSize: 15, fontWeight: 700 }}>Nehemiah Energy</span>
           </div>
           <div style={{ display: "flex", gap: 24 }}>
-            {["About", "Stations", "Support", "Privacy"].map((l) => (
-              <a key={l} href="#" style={{ fontSize: 13, color: "#666", textDecoration: "none", transition: "color 0.2s" }}>{l}</a>
-            ))}
+            {["About", "Stations", "Support", "Privacy"].map((l) =>
+              l === "About" ? (
+                <Link key={l} to="/about" style={{ fontSize: 13, color: "#666", textDecoration: "none", transition: "color 0.2s" }}>{l}</Link>
+              ) : (
+                <a key={l} href="#" style={{ fontSize: 13, color: "#666", textDecoration: "none", transition: "color 0.2s" }}>{l}</a>
+              )
+            )}
           </div>
           <div style={{ fontSize: 12, color: "#444" }}>
             &copy; 2026 Nehemiah Energy. Accra, Ghana.
