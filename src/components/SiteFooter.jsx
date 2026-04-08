@@ -61,7 +61,7 @@ const FOOTER_COLUMNS = [
     links: [
       { text: "About Us", href: "/about", isRouter: true },
       { text: "The Project", href: "/project", isRouter: true },
-      { text: "Contact", href: "#" },
+      { text: "Contact", href: "/contact", isRouter: true },
       { text: "Careers", href: "#" },
     ],
   },

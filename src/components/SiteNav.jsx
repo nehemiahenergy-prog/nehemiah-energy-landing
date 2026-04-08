@@ -25,7 +25,7 @@ const NAV_LINKS = [
   { label: "Stations", to: "#stations", isRouter: false },
   { label: "About", to: "/about", isRouter: true },
   { label: "Project", to: "/project", isRouter: true },
-  { label: "Contact", to: "#", isRouter: false },
+  { label: "Contact", to: "/contact", isRouter: true },
 ];
 
 export default function SiteNav() {
