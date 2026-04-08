@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import SiteNav from "./SiteNav";
+import SiteFooter from "./SiteFooter";
 
 const C = {
   green: "#1BF561",
@@ -57,14 +58,7 @@ function Icon({ kind, size = 24, color = "#010F12", strokeWidth = 2 }) {
 }
 
 export default function LegalLayout({ title, subtitle, lastUpdated, navActive, sections }) {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    const handler = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", handler, { passive: true });
-    handler();
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
+  useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (
     <div style={{ width: "100%", minHeight: "100vh", background: C.white, fontFamily: "'Space Grotesk', sans-serif", color: C.dark, overflowX: "hidden" }}>
@@ -94,22 +88,7 @@ export default function LegalLayout({ title, subtitle, lastUpdated, navActive, s
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
       `}</style>
 
-      {/* NAV — always partially opaque on legal pages */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: scrolled ? "14px 0" : "20px 0", background: scrolled ? "rgba(1,15,18,0.92)" : "rgba(1,15,18,0.65)", backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)", borderBottom: "1px solid rgba(255,255,255,0.06)", transition: "all 0.3s ease" }}>
-        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-          <Link to="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <NMark size={34} /><span style={{ fontSize: 14, fontWeight: 800, color: C.white, letterSpacing: 1.2 }}>NEHEMIAH ENERGY</span>
-          </Link>
-          <div className="desktop-only" style={{ alignItems: "center", gap: 4 }}>
-            <Link className="nav-link" to="/">Home</Link>
-            <a className="nav-link" href="#">Stations</a>
-            <Link className="nav-link" to="/about">About</Link>
-            <a className="nav-link" href="#">Project</a>
-            <a className="nav-link" href="#">Contact</a>
-          </div>
-          <a className="btn btn-primary" href="#"><span>Get the App</span> <Icon kind="arrow" size={14} color={C.dark} /></a>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main>
         {/* HERO */}
@@ -183,41 +162,7 @@ export default function LegalLayout({ title, subtitle, lastUpdated, navActive, s
       </main>
 
       {/* FOOTER */}
-      <footer style={{ background: C.dark, padding: "80px 0 32px", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <Pattern color={C.green} opacity={0.025} rows={8} cols={12} />
-        <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <div className="grid grid-footer" style={{ marginBottom: 64 }}>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}><NMark size={36} /><span style={{ fontSize: 15, fontWeight: 800, color: C.white, letterSpacing: 1.2 }}>NEHEMIAH ENERGY</span></div>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, marginBottom: 24, maxWidth: 320 }}>Powering Your Journey. Built by Ghanaians, for Ghanaians. EV charging and charging wallet top-ups for the everyday Ghanaian driver.</p>
-              <div style={{ display: "flex", gap: 10 }}>
-                {["instagram","twitter","facebook","linkedin"].map(s => (<a key={s} href="#" aria-label={`Nehemiah Energy on ${s}`} style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon kind={s} size={18} color="rgba(255,255,255,0.7)" /></a>))}
-              </div>
-            </div>
-            {[
-              { title: "PRODUCT", links: [{ text: "Find Stations", href: "/" },{ text: "Get the App", href: "#" },{ text: "Power Bikes", href: "#" },{ text: "For Fleets", href: "#" }] },
-              { title: "COMPANY", links: [{ text: "About Us", href: "/about", isRouter: true },{ text: "The Project", href: "#" },{ text: "Contact", href: "#" },{ text: "Careers", href: "#" }] },
-              { title: "LEGAL", links: [{ text: "Terms of Use", href: "/terms", id: "terms", isRouter: true },{ text: "Privacy Policy", href: "/privacy", id: "privacy", isRouter: true },{ text: "Refund Policy", href: "/refund", id: "refund", isRouter: true }] },
-            ].map((col, i) => (
-              <div key={i}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: C.green, letterSpacing: 1.2, marginBottom: 18 }}>{col.title}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {col.links.map(link => {
-                    const isActive = link.id === navActive;
-                    const style = { fontSize: 14, color: isActive ? C.green : "rgba(255,255,255,0.6)", fontWeight: isActive ? 700 : 400, textDecoration: "none" };
-                    return link.isRouter ? <Link key={link.text} to={link.href} style={style}>{link.text}</Link> : <a key={link.text} href={link.href} style={style}>{link.text}</a>;
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 32 }} />
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>&copy; 2026 Nehemiah Energy Ltd. All rights reserved. Accra, Ghana.</div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: C.darkGreen, letterSpacing: 0.8 }}>BUILT BY GHANAIANS. FOR GHANAIANS.</div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

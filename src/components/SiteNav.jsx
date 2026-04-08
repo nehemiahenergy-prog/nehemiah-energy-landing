@@ -45,6 +45,17 @@ export default function SiteNav() {
     return false;
   };
 
+  const navLinkStyle = (active) => ({
+    fontSize: 14,
+    fontWeight: 500,
+    color: active ? C.green : "rgba(255,255,255,0.7)",
+    padding: "10px 16px",
+    borderRadius: 8,
+    transition: "all 0.15s ease",
+    textDecoration: "none",
+    display: "inline-block",
+  });
+
   return (
     <nav
       style={{
@@ -64,8 +75,10 @@ export default function SiteNav() {
       }}
     >
       <div
-        className="container"
         style={{
+          maxWidth: 1240,
+          margin: "0 auto",
+          padding: "0 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -94,25 +107,46 @@ export default function SiteNav() {
           </span>
         </Link>
 
-        <div className="desktop-only" style={{ alignItems: "center", gap: 4 }}>
+        {/* Desktop nav — hidden below 900px via inline media query workaround */}
+        <div
+          className="site-nav-desktop-links"
+          style={{ alignItems: "center", gap: 4 }}
+        >
           {NAV_LINKS.map((link) =>
             link.isRouter ? (
               <Link
                 key={link.label}
-                className={`nav-link${isActive(link) ? " active" : ""}`}
                 to={link.to}
+                style={navLinkStyle(isActive(link))}
               >
                 {link.label}
               </Link>
             ) : (
-              <a key={link.label} className="nav-link" href={link.to}>
+              <a key={link.label} href={link.to} style={navLinkStyle(false)}>
                 {link.label}
               </a>
             )
           )}
         </div>
 
-        <a className="btn btn-primary" href="#" style={{ textDecoration: "none" }}>
+        <a
+          href="#"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "14px 22px",
+            borderRadius: 12,
+            fontSize: 14,
+            fontWeight: 700,
+            background: `linear-gradient(135deg, ${C.green}, ${C.darkGreen})`,
+            color: C.dark,
+            boxShadow: "0 6px 20px rgba(27,245,97,0.25)",
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+            transition: "transform 0.15s ease, box-shadow 0.2s ease",
+          }}
+        >
           Get the App
           <svg
             width={14}
@@ -133,6 +167,11 @@ export default function SiteNav() {
           </svg>
         </a>
       </div>
+
+      <style>{`
+        .site-nav-desktop-links { display: none; }
+        @media (min-width: 900px) { .site-nav-desktop-links { display: flex; } }
+      `}</style>
     </nav>
   );
 }

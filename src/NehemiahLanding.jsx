@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteNav from "./components/SiteNav";
+import SiteFooter from "./components/SiteFooter";
 
 const C = {
   green: "#1BF561",
@@ -434,38 +435,7 @@ export default function NehemiahLanding() {
       </section>
       </main>
 
-      {/* FOOTER */}
-      <footer style={{ background: C.dark, padding: "80px 0 32px", position: "relative", overflow: "hidden", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-        <Pattern color={C.green} opacity={0.025} rows={8} cols={12} />
-        <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <div className="grid grid-footer" style={{ marginBottom: 64 }}>
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}><NMark size={36} /><span style={{ fontSize: 15, fontWeight: 800, color: C.white, letterSpacing: 1.2 }}>NEHEMIAH ENERGY</span></div>
-              <p style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", lineHeight: 1.6, marginBottom: 24, maxWidth: 320 }}>Powering Your Journey. Built by Ghanaians, for Ghanaians. EV charging, charging wallet top-ups, and Power Bikes for the everyday Ghanaian driver.</p>
-              <div style={{ display: "flex", gap: 10 }}>
-                {["instagram","twitter","facebook","linkedin"].map(s => (<a key={s} href="#" aria-label={`Nehemiah Energy on ${s}`} style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s ease" }}><Icon kind={s} size={18} color="rgba(255,255,255,0.7)" /></a>))}
-              </div>
-            </div>
-            {[
-              { title: "PRODUCT", links: [{ text: "Find Stations", href: "#stations" },{ text: "Get the App", href: "#" },{ text: "Power Bikes", href: "#" },{ text: "For Fleets", href: "#" }] },
-              { title: "COMPANY", links: [{ text: "About Us", href: "/about", isRouter: true },{ text: "The Project", href: "#" },{ text: "Contact", href: "#" },{ text: "Careers", href: "#" }] },
-              { title: "LEGAL", links: [{ text: "Terms of Use", href: "#" },{ text: "Privacy Policy", href: "#" },{ text: "Refund Policy", href: "#" },{ text: "Shipping Policy", href: "#" }] },
-            ].map((col, i) => (
-              <div key={i}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: C.green, letterSpacing: 1.2, marginBottom: 18 }}>{col.title}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                  {col.links.map(link => link.isRouter ? (<Link key={link.text} to={link.href} style={{ fontSize: 14, color: "rgba(255,255,255,0.6)" }}>{link.text}</Link>) : (<a key={link.text} href={link.href} style={{ fontSize: 14, color: "rgba(255,255,255,0.6)" }}>{link.text}</a>))}
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 32 }} />
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }}>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.4)" }}>&copy; 2026 Nehemiah Energy Ltd. All rights reserved. Accra, Ghana.</div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: C.darkGreen, letterSpacing: 0.8 }}>BUILT BY GHANAIANS. FOR GHANAIANS.</div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
