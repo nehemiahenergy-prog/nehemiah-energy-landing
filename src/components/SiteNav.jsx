@@ -24,7 +24,7 @@ const NAV_LINKS = [
   { label: "Home", to: "/", isRouter: true },
   { label: "Stations", to: "#stations", isRouter: false },
   { label: "About", to: "/about", isRouter: true },
-  { label: "Project", to: "#", isRouter: false },
+  { label: "Project", to: "/project", isRouter: true },
   { label: "Contact", to: "#", isRouter: false },
 ];
 
@@ -41,7 +41,7 @@ export default function SiteNav() {
 
   const isActive = (link) => {
     if (link.to === "/" && location.pathname === "/") return true;
-    if (link.to === "/about" && location.pathname === "/about") return true;
+    if (link.to !== "/" && location.pathname.startsWith(link.to)) return true;
     return false;
   };
 

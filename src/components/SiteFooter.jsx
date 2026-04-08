@@ -54,15 +54,13 @@ const FOOTER_COLUMNS = [
     links: [
       { text: "Find Stations", href: "#stations" },
       { text: "Get the App", href: "#" },
-      { text: "Power Bikes", href: "#" },
-      { text: "For Fleets", href: "#" },
     ],
   },
   {
     title: "COMPANY",
     links: [
       { text: "About Us", href: "/about", isRouter: true },
-      { text: "The Project", href: "#" },
+      { text: "The Project", href: "/project", isRouter: true },
       { text: "Contact", href: "#" },
       { text: "Careers", href: "#" },
     ],
