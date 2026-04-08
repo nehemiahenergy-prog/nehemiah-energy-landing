@@ -129,15 +129,6 @@ export default function LegalLayout({ title, subtitle, lastUpdated, navActive, s
         {/* CONTENT */}
         <section style={{ background: C.white, padding: "clamp(60px,8vw,100px) 0 clamp(80px,10vw,120px)" }}>
           <div className="legal-narrow">
-            {/* TODO: Remove attorney callout after legal review is complete */}
-            <div style={{ background: C.warningBg, border: `1px solid ${C.warning}55`, borderRadius: 16, padding: "20px 24px", marginBottom: 48, display: "flex", gap: 16, alignItems: "flex-start" }}>
-              <div style={{ flexShrink: 0, marginTop: 2 }}><Icon kind="warning" size={22} color={C.warningText} /></div>
-              <div>
-                <div style={{ fontSize: 13, fontWeight: 800, color: C.warningText, letterSpacing: 0.4, textTransform: "uppercase", marginBottom: 6 }}>Attorney Review Required</div>
-                <p style={{ fontSize: 14, color: C.warningText, lineHeight: 1.6, margin: 0 }}>This document is a plain-English template. It is not legal advice and must be reviewed and adapted by a qualified Ghanaian attorney before being published or relied upon as a binding legal agreement. Items wrapped in yellow highlights are placeholders that require your input.</p>
-              </div>
-            </div>
-
             {/* TOC */}
             <div style={{ background: C.light, border: `1px solid ${C.border}`, borderRadius: 16, padding: "clamp(20px,2vw,28px)", marginBottom: 56 }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: C.darkGreen, letterSpacing: 1, textTransform: "uppercase", marginBottom: 14, paddingLeft: 14 }}>On This Page</div>

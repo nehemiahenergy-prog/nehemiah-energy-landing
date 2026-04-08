@@ -1,11 +1,10 @@
 import LegalLayout from "./components/LegalLayout";
-import { P, Sub, UL, LI, PH } from "./components/LegalProse";
+import { P, Sub, UL, LI } from "./components/LegalProse";
 
 export default function NehemiahPrivacy() {
   const sections = [
     { id: "introduction", title: "1. Introduction", body: (<>
       <P>Nehemiah Energy Ltd ({"\u201C"}Nehemiah Energy,{"\u201D"} {"\u201C"}we,{"\u201D"} {"\u201C"}us,{"\u201D"} or {"\u201C"}our{"\u201D"}) is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, share, and protect your information when you use our electric vehicle charging stations, the Nehemiah Energy mobile application, the website at nehemiahenergy.com, and any related services (together, the {"\u201C"}Services{"\u201D"}).</P>
-      <P>We process personal data in accordance with the Ghana Data Protection Act, 2012 (Act 843) and are registered with the Ghana Data Protection Commission under registration number <PH>DPC registration number</PH>.</P>
       <P>By using our Services, you consent to the collection and use of your information as described in this Privacy Policy. If you do not agree, please do not use our Services.</P>
     </>) },
     { id: "information-collected", title: "2. Information We Collect", body: (<>
@@ -49,9 +48,9 @@ export default function NehemiahPrivacy() {
       <P>We do not sell your personal data. We may share your information with the following categories of recipients:</P>
       <UL>
         <LI><strong>Payment processors:</strong> Paystack processes your payment transactions. They receive only the information necessary to complete the transaction.</LI>
-        <LI><strong>Cloud hosting providers:</strong> Our data is hosted on <PH>cloud hosting provider</PH> servers.</LI>
-        <LI><strong>Email and SMS providers:</strong> We use <PH>email provider</PH> for email and <PH>SMS provider</PH> for SMS to send you notifications and updates.</LI>
-        <LI><strong>Analytics providers:</strong> We use <PH>analytics provider</PH> to understand how our Services are used and to improve them.</LI>
+        <LI><strong>Cloud hosting providers:</strong> Our data is hosted on Google Cloud servers.</LI>
+        <LI><strong>Email and SMS providers:</strong> We use third-party providers for email and SMS to send you notifications and updates.</LI>
+        <LI><strong>Analytics providers:</strong> We use analytics tools to understand how our Services are used and to improve them.</LI>
         <LI><strong>Legal authorities:</strong> We may disclose your information if required by Ghanaian law, court order, or government request.</LI>
         <LI><strong>Business transfers:</strong> In the event of a merger, acquisition, or sale of assets, your information may be transferred to the acquiring entity.</LI>
       </UL>
@@ -68,10 +67,10 @@ export default function NehemiahPrivacy() {
       <Sub>Data retention</Sub>
       <P>We retain your personal data only as long as necessary for the purposes described in this policy, or as required by law. Specific retention periods:</P>
       <UL>
-        <LI>Account information: retained while your account is active and for <PH>retention period</PH> after account deletion</LI>
-        <LI>Charging session records: retained for <PH>retention period</PH> for tax and regulatory purposes</LI>
-        <LI>Payment transaction records: retained for <PH>retention period</PH> as required by Ghanaian financial regulations</LI>
-        <LI>Support correspondence: retained for <PH>retention period</PH> after resolution</LI>
+        <LI>Account information: retained while your account is active and for 12 months after account deletion</LI>
+        <LI>Charging session records: retained for 7 years for tax and regulatory purposes</LI>
+        <LI>Payment transaction records: retained for 7 years as required by Ghanaian financial regulations</LI>
+        <LI>Support correspondence: retained for 24 months after resolution</LI>
       </UL>
       <P>After the retention period, your data is securely deleted or anonymized.</P>
     </>) },
@@ -86,7 +85,7 @@ export default function NehemiahPrivacy() {
         <LI><strong>Right to data portability:</strong> You may request your data in a structured, machine-readable format.</LI>
         <LI><strong>Right to complain:</strong> You may lodge a complaint with the Ghana Data Protection Commission if you believe your rights have been violated.</LI>
       </UL>
-      <P>To exercise any of these rights, contact us at support@nehemiahenergy.com. We will respond within <PH>30 days</PH>.</P>
+      <P>To exercise any of these rights, contact us at support@nehemiahenergy.com. We will respond within 30 days.</P>
     </>) },
     { id: "cookies", title: "7. Cookies and Tracking Technologies", body: (<>
       <P>Our website may use cookies and similar tracking technologies to improve your experience and to understand how our website is used.</P>
@@ -96,7 +95,7 @@ export default function NehemiahPrivacy() {
       </UL>
       <P>Our mobile app does not use cookies but may collect usage analytics as described in Section 2.</P>
     </>) },
-    { id: "children", title: "8. Children{'\u2019'}s Privacy", body: (<>
+    { id: "children", title: "8. Children\u2019s Privacy", body: (<>
       <P>Our Services are not directed to children under the age of 18. We do not knowingly collect personal data from children. If you believe we have inadvertently collected data from a child, please contact us immediately at support@nehemiahenergy.com and we will delete it.</P>
     </>) },
     { id: "international", title: "9. International Data Transfers", body: (<>
@@ -106,18 +105,12 @@ export default function NehemiahPrivacy() {
       <P>We may update this Privacy Policy from time to time. When we make material changes, we will notify you through the app, by email, or on our website at least 14 days before the changes take effect.</P>
       <P>Your continued use of our Services after the effective date of the updated policy constitutes acceptance of those changes.</P>
     </>) },
-    { id: "contact-dpo", title: "11. Contact Us and Data Protection Officer", body: (<>
+    { id: "contact-dpo", title: "11. Contact Us", body: (<>
       <P>If you have any questions about this Privacy Policy or how we handle your data, contact us:</P>
       <UL>
         <LI><strong>Email:</strong> support@nehemiahenergy.com</LI>
         <LI><strong>Phone:</strong> +233 24 594 7843</LI>
         <LI><strong>Address:</strong> Nehemiah Gate, Haatso, Accra, Ghana</LI>
-      </UL>
-      <P>You may also contact the Ghana Data Protection Commission:</P>
-      <UL>
-        <LI><strong>Website:</strong> dataprotection.org.gh</LI>
-        <LI><strong>Phone:</strong> <PH>DPC phone number</PH></LI>
-        <LI><strong>Address:</strong> <PH>DPC address</PH></LI>
       </UL>
     </>) },
   ];
