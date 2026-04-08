@@ -169,7 +169,7 @@ export default function NehemiahCareers() {
                     <ul className="role-list">{role.responsibilities.map((r, i) => <li key={i}><Icon kind="check" size={14} color={C.darkGreen} /><span>{r}</span></li>)}</ul>
                     <div className="role-section-label">What we are looking for</div>
                     <ul className="role-list">{role.requirements.map((r, i) => <li key={i}><Icon kind="check" size={14} color={C.darkGreen} /><span>{r}</span></li>)}</ul>
-                    <a href={`mailto:${CAREERS_EMAIL}?subject=Application: ${encodeURIComponent(role.title)}`} className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: "auto" }}>Apply for this role <Icon kind="arrow" size={14} color={C.dark} /></a>
+                    <Link to={`/careers/apply/${role.id}`} className="btn btn-primary" style={{ width: "100%", justifyContent: "center", marginTop: "auto" }}>Apply for this role <Icon kind="arrow" size={14} color={C.dark} /></Link>
                   </div>
                 ))}
               </div>

@@ -4,6 +4,7 @@ import NehemiahAbout from './NehemiahAbout'
 import NehemiahProject from './NehemiahProject'
 import NehemiahContact from './NehemiahContact'
 import NehemiahCareers from './NehemiahCareers'
+import NehemiahCareersApply from './NehemiahCareersApply'
 import NehemiahTerms from './NehemiahTerms'
 import NehemiahPrivacy from './NehemiahPrivacy'
 import NehemiahRefund from './NehemiahRefund'
@@ -17,6 +18,7 @@ function App() {
         <Route path="/project" element={<NehemiahProject />} />
         <Route path="/contact" element={<NehemiahContact />} />
         <Route path="/careers" element={<NehemiahCareers />} />
+        <Route path="/careers/apply/:role" element={<NehemiahCareersApply />} />
         <Route path="/terms" element={<NehemiahTerms />} />
         <Route path="/privacy" element={<NehemiahPrivacy />} />
         <Route path="/refund" element={<NehemiahRefund />} />

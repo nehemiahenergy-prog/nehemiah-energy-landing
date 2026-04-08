@@ -237,7 +237,7 @@ export default function NehemiahLanding() {
               <h1 className="h-display fade-up" style={{ color: C.white, marginBottom: 24, animationDelay: "0.1s" }}>Powering<br />Your <span style={{ color: C.green }}>Journey</span>.</h1>
               <p className="fade-up" style={{ fontSize: "clamp(17px,1.5vw,22px)", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, marginBottom: 36, maxWidth: 540, animationDelay: "0.2s" }}>Ghana's fully Ghanaian EV charging network. Fast 120 kW DC charging in Accra, open 24/7 at Nehemiah Gate, Haatso. Pay with mobile money or card. Built for the drivers who keep this city moving.</p>
               <div className="fade-up" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 24, animationDelay: "0.3s" }}><AppBadge store="apple" /><AppBadge store="google" /></div>
-              <a href="#stations" className="fade-up" style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(255,255,255,0.6)", animationDelay: "0.4s" }}><Icon kind="pin" size={14} color="rgba(255,255,255,0.6)" />Or visit Nehemiah Gate, Haatso<Icon kind="arrow" size={14} color="rgba(255,255,255,0.6)" /></a>
+
             </div>
             <div className="fade-up" style={{ display: "flex", justifyContent: "center", animationDelay: "0.4s" }}>
               <div style={{ animation: "floatY 6s ease-in-out infinite" }}><PhoneMockup /></div>
