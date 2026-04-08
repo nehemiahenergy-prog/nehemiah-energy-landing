@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
+import SiteNav from "./components/SiteNav";
 
 /* ─── BRAND COLORS ─── */
 const C = {
@@ -409,75 +410,7 @@ export default function NehemiahAbout() {
         }
       `}</style>
 
-      {/* ═══ STICKY NAV ═══ */}
-      <nav
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          padding: scrolled ? "14px 0" : "20px 0",
-          background: scrolled ? "rgba(1, 15, 18, 0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-          borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.06)"
-            : "1px solid transparent",
-          transition: "all 0.3s ease",
-        }}
-      >
-        <div
-          className="neh-container"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 24,
-          }}
-        >
-          {/* Logo */}
-          <Link
-            to="/"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              textDecoration: "none",
-            }}
-          >
-            <NMark size={34} />
-            <span
-              style={{
-                fontSize: 14,
-                fontWeight: 800,
-                color: C.white,
-                letterSpacing: 1.2,
-              }}
-            >
-              NEHEMIAH ENERGY
-            </span>
-          </Link>
-
-          {/* Desktop nav links */}
-          <div
-            className="neh-desktop-nav"
-            style={{ alignItems: "center", gap: 4 }}
-          >
-            <Link className="neh-nav-link" to="/">Home</Link>
-            <a className="neh-nav-link" href="#">Stations</a>
-            <Link className="neh-nav-link active" to="/about">About</Link>
-            <a className="neh-nav-link" href="#">Project</a>
-            <a className="neh-nav-link" href="#">Contact</a>
-          </div>
-
-          {/* CTA */}
-          <a className="neh-btn neh-btn-primary" href="#">
-            Get the App
-            <Icon kind="arrow" size={14} color={C.dark} />
-          </a>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main>
         {/* ═══ HERO ═══ */}

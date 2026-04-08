@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import SiteNav from "./components/SiteNav";
 
 const C = {
   green: "#1BF561",
@@ -168,16 +169,9 @@ function FAQItem({ q, a, isOpen, onToggle, idx }) {
 }
 
 export default function NehemiahLanding() {
-  const [scrolled, setScrolled] = useState(false);
   const [openFaq, setOpenFaq] = useState(0);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", handler, { passive: true });
-    handler();
-    return () => window.removeEventListener("scroll", handler);
-  }, []);
 
   return (
     <div style={{ width: "100%", minHeight: "100vh", background: C.white, fontFamily: "'Space Grotesk', sans-serif", color: C.dark, overflowX: "hidden" }}>
@@ -226,22 +220,7 @@ export default function NehemiahLanding() {
         @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; } }
       `}</style>
 
-      {/* NAV */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: scrolled ? "14px 0" : "20px 0", background: scrolled ? "rgba(1,15,18,0.85)" : "transparent", backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none", WebkitBackdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none", borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent", transition: "all 0.3s ease" }}>
-        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 24 }}>
-          <Link to="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-            <NMark size={34} /><span style={{ fontSize: 14, fontWeight: 800, color: C.white, letterSpacing: 1.2 }}>NEHEMIAH ENERGY</span>
-          </Link>
-          <div className="desktop-only" style={{ alignItems: "center", gap: 4 }}>
-            <Link className="nav-link active" to="/">Home</Link>
-            <a className="nav-link" href="#stations">Stations</a>
-            <Link className="nav-link" to="/about">About</Link>
-            <a className="nav-link" href="#">Project</a>
-            <a className="nav-link" href="#faq">FAQ</a>
-          </div>
-          <a className="btn btn-primary" href="#">Get the App <Icon kind="arrow" size={14} color={C.dark} /></a>
-        </div>
-      </nav>
+      <SiteNav />
 
       <main>
       {/* HERO */}
@@ -252,7 +231,7 @@ export default function NehemiahLanding() {
           <div className="hero-layout">
             <div>
               <div className="fade-up label-pill" style={{ background: "rgba(27,245,97,0.08)", border: "1px solid rgba(27,245,97,0.25)", color: C.green, marginBottom: 28 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.green, animation: "pulseDot 1.6s ease-in-out infinite" }} />LIVE IN ACCRA · OPEN NOW
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.green, animation: "pulseDot 1.6s ease-in-out infinite" }} />LIVE IN ACCRA
               </div>
               <h1 className="h-display fade-up" style={{ color: C.white, marginBottom: 24, animationDelay: "0.1s" }}>Powering<br />Your <span style={{ color: C.green }}>Journey</span>.</h1>
               <p className="fade-up" style={{ fontSize: "clamp(17px,1.5vw,22px)", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, marginBottom: 36, maxWidth: 540, animationDelay: "0.2s" }}>Ghana's fully Ghanaian EV charging network. Fast 120 kW DC charging in Accra, open 24/7 at Nehemiah Gate, Haatso. Pay with mobile money or card. Built for the drivers who keep this city moving.</p>
