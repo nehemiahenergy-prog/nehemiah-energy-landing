@@ -62,7 +62,7 @@ const FOOTER_COLUMNS = [
       { text: "About Us", href: "/about", isRouter: true },
       { text: "The Project", href: "/project", isRouter: true },
       { text: "Contact", href: "/contact", isRouter: true },
-      { text: "Careers", href: "#" },
+      { text: "Careers", href: "/careers", isRouter: true },
     ],
   },
   {
