@@ -169,10 +169,25 @@ function FAQItem({ q, a, isOpen, onToggle, idx }) {
   );
 }
 
+const STATION_PHOTOS = Array.from({ length: 20 }, (_, i) => `/images/stations/station-${String(i + 1).padStart(2, "0")}.jpg`);
+
 export default function NehemiahLanding() {
   const [openFaq, setOpenFaq] = useState(0);
+  const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
+
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight") setLightbox((n) => (n + 1) % STATION_PHOTOS.length);
+      if (e.key === "ArrowLeft") setLightbox((n) => (n - 1 + STATION_PHOTOS.length) % STATION_PHOTOS.length);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
+  }, [lightbox]);
 
   return (
     <div style={{ width: "100%", minHeight: "100vh", background: C.white, fontFamily: "'Space Grotesk', sans-serif", color: C.dark, overflowX: "hidden" }}>
@@ -214,6 +229,13 @@ export default function NehemiahLanding() {
         .card:hover { transform: translateY(-3px); box-shadow: 0 24px 48px rgba(1,15,18,0.07); border-color: ${C.green}40; }
         .desktop-only { display: none; }
         @media (min-width: 900px) { .desktop-only { display: flex; } }
+        .station-gallery { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; }
+        @media (min-width: 700px) { .station-gallery { grid-template-columns: repeat(3,1fr); gap: 16px; } }
+        @media (min-width: 1000px) { .station-gallery { grid-template-columns: repeat(4,1fr); } }
+        .station-gallery-item { padding: 0; border: 1px solid ${C.border}; border-radius: 16px; overflow: hidden; cursor: pointer; background: ${C.white}; aspect-ratio: 4 / 3; display: block; }
+        .station-gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
+        .station-gallery-item:hover img { transform: scale(1.06); }
+        .station-gallery-item:hover { border-color: ${C.green}66; box-shadow: 0 16px 32px rgba(1,15,18,0.08); }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both; }
         @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
@@ -331,6 +353,28 @@ export default function NehemiahLanding() {
               <a href="tel:+233245947843" className="btn btn-light">Call the Station</a>
             </div>
           </div>
+          {/* Station photo gallery */}
+          <div style={{ marginTop: 64 }}>
+            <div style={{ textAlign: "center", marginBottom: 32 }}>
+              <div className="label-pill" style={{ background: "rgba(27,245,97,0.08)", color: C.darkGreen, marginBottom: 16, padding: "6px 14px" }}>INSIDE THE STATION</div>
+              <h3 className="h2" style={{ color: C.dark, marginBottom: 12, fontSize: "clamp(24px,3vw,34px)", fontWeight: 800, letterSpacing: -0.5 }}>A look around Nehemiah Gate</h3>
+              <p className="body-lg" style={{ maxWidth: 560, margin: "0 auto" }}>Our 120 kW DC fast chargers, the Neh Lounge, and the canopy that keeps you covered rain or shine.</p>
+            </div>
+            <div className="station-gallery">
+              {STATION_PHOTOS.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  onClick={() => setLightbox(i)}
+                  className="station-gallery-item"
+                  aria-label={`View station photo ${i + 1}`}
+                >
+                  <img src={src} alt={`Nehemiah Gate charging station in Haatso, Accra — photo ${i + 1}`} loading="lazy" />
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div style={{ textAlign: "center", marginTop: 56, padding: "32px 24px", background: "rgba(27,245,97,0.04)", border: `1px dashed ${C.green}40`, borderRadius: 20 }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: C.darkGreen, letterSpacing: 1.2, marginBottom: 10, textTransform: "uppercase" }}>Coming Soon</div>
             <div style={{ fontSize: "clamp(18px,2vw,22px)", fontWeight: 800, color: C.dark, marginBottom: 8, letterSpacing: -0.3 }}>6 more EV charging stations across Greater Accra</div>
@@ -436,6 +480,24 @@ export default function NehemiahLanding() {
       </main>
 
       <SiteFooter />
+
+      {lightbox !== null && (
+        <div
+          onClick={() => setLightbox(null)}
+          style={{ position: "fixed", inset: 0, zIndex: 1000, background: "rgba(1,15,18,0.94)", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(16px,4vw,48px)" }}
+        >
+          <button type="button" onClick={() => setLightbox(null)} aria-label="Close" style={{ position: "absolute", top: 20, right: 20, width: 44, height: 44, borderRadius: "50%", border: "none", background: "rgba(255,255,255,0.12)", color: C.white, fontSize: 22, cursor: "pointer", lineHeight: 1 }}>×</button>
+          <button type="button" onClick={(e) => { e.stopPropagation(); setLightbox((n) => (n - 1 + STATION_PHOTOS.length) % STATION_PHOTOS.length); }} aria-label="Previous photo" style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", border: "none", background: "rgba(255,255,255,0.12)", color: C.white, fontSize: 24, cursor: "pointer", lineHeight: 1 }}>‹</button>
+          <img
+            src={STATION_PHOTOS[lightbox]}
+            alt={`Nehemiah Gate charging station — photo ${lightbox + 1}`}
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: "100%", maxHeight: "100%", borderRadius: 12, boxShadow: "0 20px 60px rgba(0,0,0,0.5)", objectFit: "contain" }}
+          />
+          <button type="button" onClick={(e) => { e.stopPropagation(); setLightbox((n) => (n + 1) % STATION_PHOTOS.length); }} aria-label="Next photo" style={{ position: "absolute", right: 16, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, borderRadius: "50%", border: "none", background: "rgba(255,255,255,0.12)", color: C.white, fontSize: 24, cursor: "pointer", lineHeight: 1 }}>›</button>
+          <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.7)", fontSize: 13, fontWeight: 600, letterSpacing: 0.5 }}>{lightbox + 1} / {STATION_PHOTOS.length}</div>
+        </div>
+      )}
     </div>
   );
 }
