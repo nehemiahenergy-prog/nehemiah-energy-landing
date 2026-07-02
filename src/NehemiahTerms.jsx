@@ -1,7 +1,9 @@
 import LegalLayout from "./components/LegalLayout";
 import { P, Sub, UL, LI } from "./components/LegalProse";
+import { useSEO } from "./useSEO";
 
 export default function NehemiahTerms() {
+  useSEO({ title: "Terms of Use | Nehemiah Energy", description: "The Terms of Use governing Nehemiah Energy's EV charging stations, app, and website in Ghana.", path: "/terms" });
   const sections = [
     { id: "introduction", title: "1. Introduction", body: (<>
       <P>Welcome to Nehemiah Energy. These Terms of Use ({"\u201C"}Terms{"\u201D"}) govern your access to and use of the Nehemiah Energy electric vehicle charging stations, the Nehemiah Energy mobile application, the website at nehemiahenergy.com, and any related services we offer (together, the {"\u201C"}Services{"\u201D"}).</P>

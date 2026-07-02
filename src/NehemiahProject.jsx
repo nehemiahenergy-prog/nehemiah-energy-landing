@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
+import { useSEO } from "./useSEO";
 
 const C = {
   green: "#1BF561", darkGreen: "#00AC69", olive: "#8DC63F",
@@ -69,6 +70,12 @@ export default function NehemiahProject() {
   const [customAmount, setCustomAmount] = useState("");
   const [email, setEmail] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
+
+  useSEO({
+    title: "Neh Power Bikes & Community Projects | Nehemiah Energy Ghana",
+    description: "Support Ghana's clean energy future with Nehemiah Energy — Neh Power electric bikes, solar kits, and community projects powering everyday Ghanaians. Pay with mobile money.",
+    path: "/project",
+  });
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 

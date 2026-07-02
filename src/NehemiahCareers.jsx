@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteNav from "./components/SiteNav";
+import { useSEO } from "./useSEO";
 import SiteFooter from "./components/SiteFooter";
 
 const C = {
@@ -61,6 +62,12 @@ const VALUES = [
 ];
 
 export default function NehemiahCareers() {
+  useSEO({
+    title: "Careers | Join Nehemiah Energy — EV Charging Jobs in Accra",
+    description: "Join Nehemiah Energy and help build Ghana's EV charging future. Explore open roles in Accra and send your CV. Built by Ghanaians, for Ghanaians.",
+    path: "/careers",
+  });
+
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   return (

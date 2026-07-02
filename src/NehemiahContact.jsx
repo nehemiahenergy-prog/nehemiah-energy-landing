@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
+import { useSEO } from "./useSEO";
 
 const C = {
   green: "#1BF561", darkGreen: "#00AC69", olive: "#8DC63F",
@@ -75,6 +76,12 @@ export default function NehemiahContact() {
   const [formData, setFormData] = useState({ name: "", email: "", topic: "general", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+
+  useSEO({
+    title: "Contact & Charging Station Location | Nehemiah Energy Accra",
+    description: "Find the Nehemiah Energy EV charging station in Accra (Nehemiah Energy - Atomic, Haatso), get directions, or reach our team. Open 24/7 self-service charging with mobile money payment.",
+    path: "/contact",
+  });
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 

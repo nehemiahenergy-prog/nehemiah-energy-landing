@@ -1,7 +1,9 @@
 import LegalLayout from "./components/LegalLayout";
 import { P, Sub, UL, LI } from "./components/LegalProse";
+import { useSEO } from "./useSEO";
 
 export default function NehemiahPrivacy() {
+  useSEO({ title: "Privacy Policy | Nehemiah Energy", description: "How Nehemiah Energy collects, uses, and protects your personal data across our EV charging services in Ghana.", path: "/privacy" });
   const sections = [
     { id: "introduction", title: "1. Introduction", body: (<>
       <P>Nehemiah Energy Ltd ({"\u201C"}Nehemiah Energy,{"\u201D"} {"\u201C"}we,{"\u201D"} {"\u201C"}us,{"\u201D"} or {"\u201C"}our{"\u201D"}) is committed to protecting your personal data. This Privacy Policy explains how we collect, use, store, share, and protect your information when you use our electric vehicle charging stations, the Nehemiah Energy mobile application, the website at nehemiahenergy.com, and any related services (together, the {"\u201C"}Services{"\u201D"}).</P>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useSEO } from "./useSEO";
 import { Link } from "react-router-dom";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
@@ -232,6 +233,12 @@ function FadeSection({ children, delay = 0, style = {} }) {
    ═══════════════════════════════════════════════════════ */
 export default function NehemiahAbout() {
   const [scrolled, setScrolled] = useState(false);
+
+  useSEO({
+    title: "About Nehemiah Energy | Ghana's Local EV Charging Company",
+    description: "Nehemiah Energy is a fully Ghanaian EV charging company founded by Eunice K. Asemnor, building Accra's electric vehicle charging network — DC fast charging, mobile money, and rewards for everyday drivers.",
+    path: "/about",
+  });
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 30);

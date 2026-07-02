@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useSEO } from "./useSEO";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
 
@@ -179,6 +180,12 @@ const STATION_PHOTOS = Array.from({ length: 20 }, (_, i) => `/images/stations/st
 export default function NehemiahLanding() {
   const [openFaq, setOpenFaq] = useState(0);
   const [lightbox, setLightbox] = useState(null);
+
+  useSEO({
+    title: "EV Charging in Accra, Ghana | Nehemiah Energy — DC Fast Charging",
+    description: "Ghana's fully local EV charging network. DC fast charging in Accra at Nehemiah Gate, Haatso — pay with mobile money or card, 24/7 self-service. Find stations, charge, and earn rewards.",
+    path: "/",
+  });
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 

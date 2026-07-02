@@ -1,7 +1,9 @@
 import LegalLayout from "./components/LegalLayout";
 import { P, Sub, UL, LI } from "./components/LegalProse";
+import { useSEO } from "./useSEO";
 
 export default function NehemiahRefund() {
+  useSEO({ title: "Refund Policy | Nehemiah Energy", description: "When and how to request a refund for charging sessions and wallet top-ups with Nehemiah Energy in Ghana.", path: "/refund" });
   const sections = [
     { id: "overview", title: "1. Overview", body: (<>
       <P>This Refund Policy explains when and how you can request a refund for charging sessions and wallet top-ups with Nehemiah Energy. We want every charging experience to be a good one, and if something goes wrong, we will make it right.</P>
