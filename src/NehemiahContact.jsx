@@ -59,7 +59,7 @@ const CONTACT_METHODS = [
 ];
 
 const FAQS = [
-  { q: "Where is your charging station?", a: "Our first station is at Nehemiah Gate in Haatso, Accra. Open 24/7 and self-service. Search \u2018Nehemiah Energy Haatso\u2019 on Google Maps, or hit the Get Directions button below to open it directly. More stations are coming online across Greater Accra in 2026." },
+  { q: "Where is your charging station?", a: "Our first station is at Nehemiah Gate in Haatso, Accra. Open 24/7 and self-service. Search \u2018Nehemiah Energy - Atomic\u2019 on Google Maps, or hit the Get Directions button below to open it directly. More stations are coming online across Greater Accra in 2026." },
   { q: "Is my electric vehicle compatible?", a: "Probably yes. We use the GB/T DC fast charging standard with two 120 kW guns (Gun A and Gun B), which covers most EVs sold in Ghana including BYD, MG, JAC, Geely, and Great Wall. If you drive a CCS or CHAdeMO vehicle, send us your make and model and we will let you know." },
   { q: "How much does it cost to charge?", a: "Membership is free to join through the Nehemiah Energy app. Current charging rates are shown live in the app and at every station before you start a session, so you always know what you are paying. Sign up to see pricing and start charging." },
   { q: "How do I pay?", a: "Through the Nehemiah Energy app. Top up your charging wallet with mobile money (MTN, Vodafone, AirtelTigo) or any major debit or credit card via Paystack. Wallet balances do not expire. Sessions are deducted automatically when you charge." },
@@ -228,7 +228,7 @@ export default function NehemiahContact() {
                 </div>
               ))}
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=Nehemiah+Energy+Haatso+Accra" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Get Directions <Icon kind="arrow" size={14} color={C.dark} /></a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Nehemiah%20Energy%20-%20Atomic" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Get Directions <Icon kind="arrow" size={14} color={C.dark} /></a>
           </div>
         </section>
 

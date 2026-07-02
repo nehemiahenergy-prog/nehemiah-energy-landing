@@ -349,7 +349,7 @@ export default function NehemiahLanding() {
               </div>
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a href="https://www.google.com/maps/search/?api=1&query=Nehemiah+Gate+Haatso+Accra" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Get Directions <Icon kind="arrow" size={14} color={C.dark} /></a>
+              <a href="https://www.google.com/maps/search/?api=1&query=Nehemiah%20Energy%20-%20Atomic" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Get Directions <Icon kind="arrow" size={14} color={C.dark} /></a>
               <a href="tel:+233245947843" className="btn btn-light">Call the Station</a>
             </div>
           </div>
