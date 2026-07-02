@@ -17,17 +17,22 @@ const C = {
   textBody: "#4B5563",
 };
 
+// Nehemiah Gate opens Monday, 6 July 2026 (Ghana is UTC+0). This flag flips
+// the station status from "opening" to "open" automatically on launch day.
+const STATION_OPENS = new Date("2026-07-06T00:00:00+00:00");
+const STATION_IS_OPEN = new Date() >= STATION_OPENS;
+
 const N_MAIN = "M 406.16 148.62 L 344.47 319.38 L 324.56 374.46 L 252.37 280.73 L 271.26 231.17 L 311.14 279.16 Z";
 const N_ACCENT = "M 265.19 342.22 L 189.11 446.65 L 240.92 310.73 Z";
 const PAT_M = "M 62.36 -5.65 L 40.92 53.68 L 34 72.82 L 8.92 40.25 L 15.48 23.03 L 29.34 39.71 Z";
 const PAT_A = "M 13.37 61.62 L -13.06 97.91 L 4.94 50.68 Z";
 
 const FAQS = [
-  { q: "Where can I charge my electric vehicle in Accra?", a: "You can charge your EV at Nehemiah Gate, our flagship 120 kW DC fast charging station in Haatso, Accra. The station is open 24 hours a day, 7 days a week, with two charging guns supporting GBT connectors. We are expanding to six more locations across Greater Accra and beyond throughout 2026 and 2027." },
+  { q: "Where can I charge my electric vehicle in Accra?", a: "You can charge your EV at Nehemiah Gate, our flagship 120 kW DC fast charging station in Haatso, Accra. " + (STATION_IS_OPEN ? "The station is open 24 hours a day, 7 days a week, with two charging guns supporting GBT connectors." : "The station opens Monday, July 6, 2026, and will run 24 hours a day, 7 days a week, with two charging guns supporting GBT connectors.") + " We are expanding to six more locations across Greater Accra and beyond throughout 2026 and 2027." },
 
   { q: "What types of electric vehicles can charge at Nehemiah stations?", a: "Our 120 kW DC fast chargers use GBT connectors, which work with most Chinese-made EVs popular in Ghana including BYD, Geely, Chery, Dongfeng, JAC, and many others. We are evaluating CCS2 and CHAdeMO support for future stations to serve Tesla, Nissan, Hyundai, and Kia drivers as the EV market in Ghana grows." },
   { q: "How long does it take to fast charge an EV at Nehemiah Gate?", a: "Most drivers go from a low battery to roughly 80 percent in about 30 minutes on our 120 kW DC fast chargers. The exact time depends on your car\u2019s battery size, current state of charge, and the maximum charging speed your vehicle supports. While you wait, relax in the Neh Lounge with AC, free Wi-Fi, cold water, and seating." },
-  { q: "Are Nehemiah Energy charging stations open 24/7?", a: "Yes. Nehemiah Gate in Haatso is open 24 hours a day, 365 days a year. Whether you finish your last delivery at midnight or start your shift before sunrise, the station is ready. The chargers are fully self-service through the Nehemiah Energy app, so you do not need an attendant to plug in. Day or night, we dey." },
+  { q: "Are Nehemiah Energy charging stations open 24/7?", a: (STATION_IS_OPEN ? "Yes. Nehemiah Gate in Haatso is open 24 hours a day, 365 days a year. " : "Yes, once we open. Nehemiah Gate in Haatso opens Monday, July 6, 2026, and will run 24 hours a day, 365 days a year. ") + "Whether you finish your last delivery at midnight or start your shift before sunrise, the station is ready. The chargers are fully self-service through the Nehemiah Energy app, so you do not need an attendant to plug in. Day or night, we dey." },
   { q: "How do I pay for charging at Nehemiah Energy?", a: "We accept all major mobile money providers in Ghana \u2014 MTN MoMo, AirtelTigo Money, and Vodafone Cash \u2014 as well as debit and credit cards through Paystack. You can top up your charging wallet in the Nehemiah Energy app and tap to pay at the station, or pay per session as a guest. No cash needed." },
   { q: "Do I need an account or the app to charge my EV?", a: "No account is required to charge \u2014 guests can pay per session at the station. But becoming a member saves you 2 cedis per kWh on every charge, gives you loyalty stamps, lets you top up your wallet in advance, and unlocks the referral bonus. Most drivers join up after their first or second charge." },
   { q: "Is Nehemiah Energy good for Bolt and delivery drivers?", a: "Yes. Nehemiah Energy was built specifically for Ghana\u2019s hardworking drivers \u2014 Bolt drivers, Yango drivers, delivery riders, and EV owners. Lower member rates, 30-minute fast charging, mobile money payment, a comfortable air-conditioned lounge, and 24/7 availability mean less downtime and more earnings for the people who keep this country moving." },
@@ -257,7 +262,7 @@ export default function NehemiahLanding() {
                 <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.green, animation: "pulseDot 1.6s ease-in-out infinite" }} />LIVE IN ACCRA
               </div>
               <h1 className="h-display fade-up" style={{ color: C.white, marginBottom: 24, animationDelay: "0.1s" }}>Powering<br />Your <span style={{ color: C.green }}>Journey</span>.</h1>
-              <p className="fade-up" style={{ fontSize: "clamp(17px,1.5vw,22px)", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, marginBottom: 36, maxWidth: 540, animationDelay: "0.2s" }}>Ghana's fully Ghanaian EV charging network. Fast 120 kW DC charging in Accra, open 24/7 at Nehemiah Gate, Haatso. Pay with mobile money or card. Built for the drivers who keep this city moving.</p>
+              <p className="fade-up" style={{ fontSize: "clamp(17px,1.5vw,22px)", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, marginBottom: 36, maxWidth: 540, animationDelay: "0.2s" }}>Ghana's fully Ghanaian EV charging network. Fast 120 kW DC charging in Accra, {STATION_IS_OPEN ? "open 24/7" : "opening Monday, July 6"} at Nehemiah Gate, Haatso. Pay with mobile money or card. Built for the drivers who keep this city moving.</p>
               <div className="fade-up" style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 24, animationDelay: "0.3s" }}><AppBadge store="apple" /><AppBadge store="google" /></div>
 
             </div>
@@ -326,14 +331,18 @@ export default function NehemiahLanding() {
           <div style={{ textAlign: "center", marginBottom: 64 }}>
             <div className="label-pill" style={{ background: "rgba(27,245,97,0.08)", color: C.darkGreen, marginBottom: 20, padding: "6px 14px" }}>FIND US IN ACCRA</div>
             <h2 className="h1" style={{ color: C.dark, marginBottom: 16 }}>EV charging in Haatso, Accra.</h2>
-            <p className="body-lg" style={{ maxWidth: 640, margin: "0 auto" }}>Nehemiah Gate is our flagship 120 kW DC fast charging station, open 24 hours a day in Haatso, Greater Accra. Drop in any time, plug in, and we will have you back on the road in about 30 minutes.</p>
+            <p className="body-lg" style={{ maxWidth: 640, margin: "0 auto" }}>{STATION_IS_OPEN ? "Nehemiah Gate is our flagship 120 kW DC fast charging station, open 24 hours a day in Haatso, Greater Accra. Drop in any time, plug in, and we will have you back on the road in about 30 minutes." : "Nehemiah Gate, our flagship 120 kW DC fast charging station in Haatso, Greater Accra, opens Monday, July 6, 2026. Once open, drop in any time — plug in and we will have you back on the road in about 30 minutes."}</p>
           </div>
           <div style={{ background: C.white, border: `1px solid ${C.border}`, borderRadius: 28, padding: "clamp(28px,4vw,48px)", maxWidth: 760, margin: "0 auto" }}>
-            <div className="label-pill" style={{ background: "rgba(27,245,97,0.1)", border: "1px solid rgba(27,245,97,0.25)", color: C.darkGreen, marginBottom: 18, padding: "6px 12px" }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: C.darkGreen, animation: "pulseDot 1.6s ease-in-out infinite" }} />OPEN NOW</div>
+            {STATION_IS_OPEN ? (
+              <div className="label-pill" style={{ background: "rgba(27,245,97,0.1)", border: "1px solid rgba(27,245,97,0.25)", color: C.darkGreen, marginBottom: 18, padding: "6px 12px" }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: C.darkGreen, animation: "pulseDot 1.6s ease-in-out infinite" }} />OPEN NOW</div>
+            ) : (
+              <div className="label-pill" style={{ background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.35)", color: "#B45309", marginBottom: 18, padding: "6px 12px" }}><div style={{ width: 6, height: 6, borderRadius: "50%", background: "#D97706", animation: "pulseDot 1.6s ease-in-out infinite" }} />OPENING MONDAY, JULY 6</div>
+            )}
             <h3 itemProp="name" style={{ fontSize: "clamp(28px,3.5vw,40px)", fontWeight: 800, color: C.dark, letterSpacing: -0.5, marginBottom: 8, lineHeight: 1.1 }}>Nehemiah Gate</h3>
             <div style={{ fontSize: 14, fontWeight: 600, color: C.darkGreen, letterSpacing: 0.5, marginBottom: 24, textTransform: "uppercase" }}>Station NE-01 · Flagship</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: 28 }}>
-              {[{ icon: "pin", label: "Address", value: <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress"><span itemProp="streetAddress">Haatso</span>, <span itemProp="addressLocality">Accra</span>, <span itemProp="addressRegion">Greater Accra</span>, <span itemProp="addressCountry">Ghana</span></span> },{ icon: "clock", label: "Hours", value: "Open 24 hours · 7 days a week · 365 days a year" },{ icon: "bolt", label: "Charging Power", value: "120 kW DC Fast · 2 GBT connectors (Gun A & Gun B)" },{ icon: "smartphone", label: "Contact", value: <a href="tel:+233245947843" itemProp="telephone" style={{ color: C.dark }}>+233 24 594 7843</a> }].map((row, i) => (
+              {[{ icon: "pin", label: "Address", value: <span itemProp="address" itemScope itemType="https://schema.org/PostalAddress"><span itemProp="streetAddress">Haatso</span>, <span itemProp="addressLocality">Accra</span>, <span itemProp="addressRegion">Greater Accra</span>, <span itemProp="addressCountry">Ghana</span></span> },{ icon: "clock", label: "Hours", value: STATION_IS_OPEN ? "Open 24 hours · 7 days a week · 365 days a year" : "Opens Monday, July 6, 2026 · then 24 hours daily" },{ icon: "bolt", label: "Charging Power", value: "120 kW DC Fast · 2 GBT connectors (Gun A & Gun B)" },{ icon: "smartphone", label: "Contact", value: <a href="tel:+233245947843" itemProp="telephone" style={{ color: C.dark }}>+233 24 594 7843</a> }].map((row, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
                   <div style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 10, background: "rgba(27,245,97,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}><Icon kind={row.icon} size={18} color={C.darkGreen} /></div>
                   <div><div style={{ fontSize: 11, fontWeight: 700, color: C.muted, letterSpacing: 0.6, textTransform: "uppercase", marginBottom: 2 }}>{row.label}</div><div style={{ fontSize: 15, color: C.dark, fontWeight: 500 }}>{row.value}</div></div>

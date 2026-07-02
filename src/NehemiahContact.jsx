@@ -12,6 +12,9 @@ const C = {
 const IS_PREVIEW_MODE = true;
 const CONTACT_ENDPOINT = "/api/contact";
 
+// Nehemiah Gate opens Monday, 6 July 2026 (Ghana is UTC+0). Flips automatically on launch day.
+const STATION_IS_OPEN = new Date() >= new Date("2026-07-06T00:00:00+00:00");
+
 const N_MAIN = "M 406.16 148.62 L 344.47 319.38 L 324.56 374.46 L 252.37 280.73 L 271.26 231.17 L 311.14 279.16 Z";
 const N_ACCENT = "M 265.19 342.22 L 189.11 446.65 L 240.92 310.73 Z";
 const PAT_M = "M 62.36 -5.65 L 40.92 53.68 L 34 72.82 L 8.92 40.25 L 15.48 23.03 L 29.34 39.71 Z";
@@ -59,7 +62,7 @@ const CONTACT_METHODS = [
 ];
 
 const FAQS = [
-  { q: "Where is your charging station?", a: "Our first station is at Nehemiah Gate in Haatso, Accra. Open 24/7 and self-service. Search \u2018Nehemiah Energy - Atomic\u2019 on Google Maps, or hit the Get Directions button below to open it directly. More stations are coming online across Greater Accra in 2026." },
+  { q: "Where is your charging station?", a: (STATION_IS_OPEN ? "Our first station is at Nehemiah Gate in Haatso, Accra. Open 24/7 and self-service. " : "Our first station is Nehemiah Gate in Haatso, Accra, opening Monday, July 6, 2026 \u2014 then open 24/7 and self-service. ") + "Search \u2018Nehemiah Energy - Atomic\u2019 on Google Maps, or hit the Get Directions button below to open it directly. More stations are coming online across Greater Accra in 2026." },
   { q: "Is my electric vehicle compatible?", a: "Probably yes. We use the GB/T DC fast charging standard with two 120 kW guns (Gun A and Gun B), which covers most EVs sold in Ghana including BYD, MG, JAC, Geely, and Great Wall. If you drive a CCS or CHAdeMO vehicle, send us your make and model and we will let you know." },
   { q: "How much does it cost to charge?", a: "Membership is free to join through the Nehemiah Energy app. Current charging rates are shown live in the app and at every station before you start a session, so you always know what you are paying. Sign up to see pricing and start charging." },
   { q: "How do I pay?", a: "Through the Nehemiah Energy app. Top up your charging wallet with mobile money (MTN, Vodafone, AirtelTigo) or any major debit or credit card via Paystack. Wallet balances do not expire. Sessions are deducted automatically when you charge." },
@@ -218,7 +221,7 @@ export default function NehemiahContact() {
             <h2 className="h-display" style={{ color: C.white, maxWidth: 900, margin: "0 auto 24px" }}>Come find us.</h2>
             <p className="body-lg" style={{ color: "rgba(255,255,255,0.65)", maxWidth: 620, margin: "0 auto 56px" }}>Drop by Nehemiah Gate in Haatso. Plug in, top up at the lounge, and meet the team building this thing.</p>
             <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14, maxWidth: 720, margin: "0 auto 40px" }}>
-              {[{ icon: "pin", label: "Address", value: "Nehemiah Gate, Haatso, Accra, Ghana" },{ icon: "phone", label: "Phone", value: "+233 24 594 7843", href: "tel:+233245947843" },{ icon: "clock", label: "Hours", value: "Open 24/7 \u2014 self-service charging, day or night" }].map((item, i) => (
+              {[{ icon: "pin", label: "Address", value: "Nehemiah Gate, Haatso, Accra, Ghana" },{ icon: "phone", label: "Phone", value: "+233 24 594 7843", href: "tel:+233245947843" },{ icon: "clock", label: "Hours", value: STATION_IS_OPEN ? "Open 24/7 \u2014 self-service charging, day or night" : "Opens Monday, July 6, 2026 \u2014 then 24/7 self-service" }].map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 16, padding: "20px 24px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, textAlign: "left" }}>
                   <div style={{ width: 44, height: 44, borderRadius: 11, background: "rgba(27,245,97,0.12)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><Icon kind={item.icon} size={20} color={C.green} /></div>
                   <div style={{ flex: 1 }}>
