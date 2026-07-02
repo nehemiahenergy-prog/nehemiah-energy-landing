@@ -523,10 +523,10 @@ export default function NehemiahAbout() {
                 animationDelay: "0.3s",
               }}
             >
-              <a className="neh-btn neh-btn-primary" href="#">
+              <Link className="neh-btn neh-btn-primary" to="/#stations">
                 Find a Station
                 <Icon kind="arrow" size={14} color={C.dark} />
-              </a>
+              </Link>
               <a className="neh-btn neh-btn-ghost" href="#mission">
                 Read Our Mission
               </a>
@@ -1177,9 +1177,9 @@ export default function NehemiahAbout() {
             {/* TODO: fetch live stats from /api/impact-stats */}
             <div className="neh-grid-4">
               {[
-                { icon: "users", value: "50+", label: "Active Drivers" },
+                { icon: "flag", value: "100%", label: "Ghanaian Owned" },
                 { icon: "bolt", value: "30", suffix: "min", label: "Avg Charge Time" },
-                { icon: "pin", value: "1", label: "Station Live" },
+                { icon: "pin", value: "1", label: "Station Opening" },
                 { icon: "globe", value: "2", label: "Charging Guns" },
               ].map((stat, i) => (
                 <FadeSection key={i} delay={i * 0.08}>
@@ -1463,14 +1463,13 @@ export default function NehemiahAbout() {
                   >
                     A portion of every charge and every round-up donation goes
                     toward teaching Ghanaian kids about clean energy, solar
-                    power, and the future they will inherit. 200+ kids reached so
-                    far.
+                    power, and the future they will inherit.
                   </p>
 
-                  <a className="neh-btn neh-btn-primary" href="#">
+                  <Link className="neh-btn neh-btn-primary" to="/project">
                     Learn About the Project
                     <Icon kind="arrow" size={14} color={C.dark} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </FadeSection>

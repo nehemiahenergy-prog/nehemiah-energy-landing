@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSEO } from "./useSEO";
 import SiteNav from "./components/SiteNav";
 import SiteFooter from "./components/SiteFooter";
@@ -98,15 +98,32 @@ function Icon({ kind, size = 24, color = "#010F12", strokeWidth = 2, style = {} 
   return (<svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, ...style }} aria-hidden="true">{paths[kind]}</svg>);
 }
 
+// The mobile app is not published yet. Flip APP_LIVE to true and set the real
+// store URLs once it ships; every badge/CTA will switch from "Coming soon" to live.
+const APP_LIVE = false;
+const APP_STORE_URL = "https://apps.apple.com/app/nehemiah-energy/";
+const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.nehemiahenergy.app";
+
 function AppBadge({ store }) {
   const isApple = store === "apple";
-  return (
-    <a href={isApple ? "https://apps.apple.com/app/nehemiah-energy/" : "https://play.google.com/store/apps/details?id=com.nehemiahenergy.app"} aria-label={isApple ? "Download Nehemiah Energy on the App Store" : "Get Nehemiah Energy on Google Play"} style={{ display: "inline-flex", alignItems: "center", gap: 12, background: C.dark, border: "1px solid rgba(255,255,255,0.15)", borderRadius: 12, padding: "10px 18px", textDecoration: "none", transition: "transform 0.15s ease, border-color 0.15s ease", minWidth: 160 }}>
-      {isApple ? (<svg width="26" height="26" viewBox="0 0 24 24" fill={C.white} aria-hidden="true"><path d="M17.05 12.04c-.03-3.03 2.47-4.49 2.59-4.56-1.41-2.07-3.62-2.35-4.4-2.38-1.87-.19-3.65 1.1-4.6 1.1-.95 0-2.41-1.07-3.97-1.04-2.04.03-3.93 1.19-4.98 3.02-2.13 3.69-.54 9.14 1.52 12.13 1.01 1.46 2.21 3.1 3.79 3.04 1.52-.06 2.1-.98 3.94-.98s2.36.98 3.97.95c1.64-.03 2.68-1.49 3.68-2.96 1.16-1.7 1.64-3.34 1.66-3.43-.04-.02-3.18-1.22-3.21-4.84zM14.04 3.13c.84-1.02 1.41-2.43 1.25-3.84-1.21.05-2.67.81-3.54 1.82-.78.9-1.46 2.34-1.28 3.72 1.35.1 2.73-.69 3.57-1.7z"/></svg>) : (<svg width="24" height="26" viewBox="0 0 24 26" fill="none" aria-hidden="true"><path d="M3.18 1.5c-.37.4-.58.95-.58 1.66v20.18c0 .71.21 1.27.58 1.66l.07.07L14.7 13.5v-.21L3.25 1.43l-.07.07z" fill="#00C2FF"/><path d="M18.7 17.5l-4-4v-.21l4-4 .09.05 4.74 2.7c1.35.77 1.35 2.02 0 2.79l-4.74 2.7-.09.06z" fill="#FFD400"/><path d="M18.79 17.44l-4.09-4.09L3.18 24.92c.45.47 1.18.53 2.01.06l13.6-7.54" fill="#FF3946"/><path d="M18.79 9.16L5.19 1.62c-.83-.47-1.56-.41-2.01.06l11.52 11.57 4.09-4.09z" fill="#00F076"/></svg>)}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <span style={{ fontSize: 9, color: "rgba(255,255,255,0.7)", letterSpacing: 0.3, lineHeight: 1.1 }}>{isApple ? "Download on the" : "GET IT ON"}</span>
-        <span style={{ fontSize: 16, color: C.white, fontWeight: 700, letterSpacing: -0.2, lineHeight: 1.2 }}>{isApple ? "App Store" : "Google Play"}</span>
+  const icon = isApple ? (<svg width="26" height="26" viewBox="0 0 24 24" fill={C.white} aria-hidden="true"><path d="M17.05 12.04c-.03-3.03 2.47-4.49 2.59-4.56-1.41-2.07-3.62-2.35-4.4-2.38-1.87-.19-3.65 1.1-4.6 1.1-.95 0-2.41-1.07-3.97-1.04-2.04.03-3.93 1.19-4.98 3.02-2.13 3.69-.54 9.14 1.52 12.13 1.01 1.46 2.21 3.1 3.79 3.04 1.52-.06 2.1-.98 3.94-.98s2.36.98 3.97.95c1.64-.03 2.68-1.49 3.68-2.96 1.16-1.7 1.64-3.34 1.66-3.43-.04-.02-3.18-1.22-3.21-4.84zM14.04 3.13c.84-1.02 1.41-2.43 1.25-3.84-1.21.05-2.67.81-3.54 1.82-.78.9-1.46 2.34-1.28 3.72 1.35.1 2.73-.69 3.57-1.7z"/></svg>) : (<svg width="24" height="26" viewBox="0 0 24 26" fill="none" aria-hidden="true"><path d="M3.18 1.5c-.37.4-.58.95-.58 1.66v20.18c0 .71.21 1.27.58 1.66l.07.07L14.7 13.5v-.21L3.25 1.43l-.07.07z" fill="#00C2FF"/><path d="M18.7 17.5l-4-4v-.21l4-4 .09.05 4.74 2.7c1.35.77 1.35 2.02 0 2.79l-4.74 2.7-.09.06z" fill="#FFD400"/><path d="M18.79 17.44l-4.09-4.09L3.18 24.92c.45.47 1.18.53 2.01.06l13.6-7.54" fill="#FF3946"/><path d="M18.79 9.16L5.19 1.62c-.83-.47-1.56-.41-2.01.06l11.52 11.57 4.09-4.09z" fill="#00F076"/></svg>);
+  const label = (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+      <span style={{ fontSize: 9, color: "rgba(255,255,255,0.7)", letterSpacing: 0.3, lineHeight: 1.1 }}>{APP_LIVE ? (isApple ? "Download on the" : "GET IT ON") : "Coming soon to"}</span>
+      <span style={{ fontSize: 16, color: C.white, fontWeight: 700, letterSpacing: -0.2, lineHeight: 1.2 }}>{isApple ? "App Store" : "Google Play"}</span>
+    </div>
+  );
+  const baseStyle = { display: "inline-flex", alignItems: "center", gap: 12, background: C.dark, border: "1px solid rgba(255,255,255,0.15)", borderRadius: 12, padding: "10px 18px", textDecoration: "none", transition: "transform 0.15s ease, border-color 0.15s ease", minWidth: 160 };
+  if (!APP_LIVE) {
+    return (
+      <div aria-label={`Nehemiah Energy app coming soon to ${isApple ? "the App Store" : "Google Play"}`} style={{ ...baseStyle, opacity: 0.6, cursor: "default" }}>
+        {icon}{label}
       </div>
+    );
+  }
+  return (
+    <a href={isApple ? APP_STORE_URL : PLAY_STORE_URL} aria-label={isApple ? "Download Nehemiah Energy on the App Store" : "Get Nehemiah Energy on Google Play"} style={baseStyle}>
+      {icon}{label}
     </a>
   );
 }
@@ -130,7 +147,7 @@ function PhoneMockup() {
             <div style={{ fontSize: 9, fontWeight: 700, color: C.green, letterSpacing: 1, marginBottom: 4 }}>NEHEMIAH GATE</div>
             <div style={{ fontSize: 22, fontWeight: 800, color: C.white, letterSpacing: -0.5, marginBottom: 8 }}>Haatso</div>
             <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 8px", background: C.green, color: C.dark, fontSize: 9, fontWeight: 800, borderRadius: 10, letterSpacing: 0.4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: C.dark }} />OPEN</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 4, padding: "3px 8px", background: C.green, color: C.dark, fontSize: 9, fontWeight: 800, borderRadius: 10, letterSpacing: 0.4 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: C.dark }} />{STATION_IS_OPEN ? "OPEN" : "SOON"}</span>
               <span style={{ padding: "3px 8px", background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.8)", fontSize: 9, fontWeight: 700, borderRadius: 10, letterSpacing: 0.3 }}>2/2 FREE</span>
             </div>
             <div style={{ fontSize: 10, color: "rgba(255,255,255,0.55)" }}>2.4 km · DC fast charging</div>
@@ -180,6 +197,7 @@ const STATION_PHOTOS = Array.from({ length: 20 }, (_, i) => `/images/stations/st
 export default function NehemiahLanding() {
   const [openFaq, setOpenFaq] = useState(0);
   const [lightbox, setLightbox] = useState(null);
+  const location = useLocation();
 
   useSEO({
     title: "EV Charging in Accra, Ghana | Nehemiah Energy — DC Fast Charging",
@@ -187,7 +205,17 @@ export default function NehemiahLanding() {
     path: "/",
   });
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.querySelector(location.hash);
+      if (el) {
+        // Wait a tick so the section is mounted before scrolling to it.
+        setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 0);
+        return;
+      }
+    }
+    window.scrollTo(0, 0);
+  }, [location.pathname, location.hash]);
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -266,7 +294,7 @@ export default function NehemiahLanding() {
           <div className="hero-layout">
             <div>
               <div className="fade-up label-pill" style={{ background: "rgba(27,245,97,0.08)", border: "1px solid rgba(27,245,97,0.25)", color: C.green, marginBottom: 28 }}>
-                <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.green, animation: "pulseDot 1.6s ease-in-out infinite" }} />LIVE IN ACCRA
+                <div style={{ width: 8, height: 8, borderRadius: "50%", background: C.green, animation: "pulseDot 1.6s ease-in-out infinite" }} />{STATION_IS_OPEN ? "LIVE IN ACCRA" : "OPENING JULY 6 · ACCRA"}
               </div>
               <h1 className="h-display fade-up" style={{ color: C.white, marginBottom: 24, animationDelay: "0.1s" }}>Powering<br />Your <span style={{ color: C.green }}>Journey</span>.</h1>
               <p className="fade-up" style={{ fontSize: "clamp(17px,1.5vw,22px)", color: "rgba(255,255,255,0.75)", lineHeight: 1.6, marginBottom: 36, maxWidth: 540, animationDelay: "0.2s" }}>Ghana's fully Ghanaian EV charging network. Fast DC charging in Accra, {STATION_IS_OPEN ? "open 24/7" : "opening Monday, July 6"} at Nehemiah Gate, Haatso. Pay with mobile money or card. Built for the drivers who keep this city moving.</p>
@@ -301,7 +329,7 @@ export default function NehemiahLanding() {
             <p className="body-lg" style={{ maxWidth: 560, margin: "0 auto" }}>Three steps. No drama. Get powered up in 30 minutes and back on the road.</p>
           </div>
           <div className="grid grid-3">
-            {[{ num: "01", title: "Drive", icon: "route", desc: "Find your nearest Nehemiah charging station in the app. Real-time availability for every charging gun, no guessing games." },{ num: "02", title: "Charge", icon: "plug", desc: "Plug in. Tap to start. Watch the kWh roll in. Fast DC charging \u2014 full charge in about 30 minutes for most EVs." },{ num: "03", title: "Earn", icon: "gift", desc: "Stack stamps with every charge. Every 11th charge is free. Members save 2 cedis per kWh. Refer a paddy, both of you earn." }].map((step, i) => (
+            {[{ num: "01", title: "Drive", icon: "route", desc: "Find your nearest Nehemiah charging station in the app. Real-time availability for every charging gun, no guessing games." },{ num: "02", title: "Charge", icon: "plug", desc: "Plug in. Tap to start. Watch the kWh roll in. Fast DC charging \u2014 full charge in about 30 minutes for most EVs." },{ num: "03", title: "Earn", icon: "gift", desc: "Stack stamps with every charge. Every 11th charge is free. Members save 2 cedis per kWh. Refer a paddy, both of you earn. Terms apply — see our Terms of Use." }].map((step, i) => (
               <div key={i} className="card" style={{ position: "relative" }}>
                 <div aria-hidden="true" style={{ position: "absolute", top: 24, right: 28, fontSize: 64, fontWeight: 800, color: C.border, lineHeight: 1, letterSpacing: -2 }}>{step.num}</div>
                 <div style={{ width: 56, height: 56, borderRadius: 14, background: "rgba(27,245,97,0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 24 }}><Icon kind={step.icon} size={28} color={C.darkGreen} /></div>
@@ -430,40 +458,14 @@ export default function NehemiahLanding() {
               <div className="label-pill" style={{ background: "rgba(27,245,97,0.08)", border: "1px solid rgba(27,245,97,0.2)", color: C.green, marginBottom: 24 }}>THE NEHEMIAH PROJECT</div>
               <h2 className="h-display" style={{ color: C.white, marginBottom: 24 }}>Every Charge Builds<br />a <span style={{ color: C.green }}>Brighter Ghana</span></h2>
               <p className="body-lg" style={{ color: "rgba(255,255,255,0.7)", maxWidth: 620, margin: "0 auto 48px" }}>When you round up your charge, the extra pesewas go to the Nehemiah Project {"\u2014"} funding renewable energy education for kids across Ghana.</p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, maxWidth: 720, margin: "0 auto 40px" }}>
-                {[{ icon: "heart", value: "GHS 4,280", label: "Total Raised" },{ icon: "person", value: "342", label: "Kids Helped" },{ icon: "check", value: "100%", label: "To the Cause" }].map((stat, i) => (
-                  <div key={i} style={{ background: "rgba(27,245,97,0.04)", border: "1px solid rgba(27,245,97,0.18)", borderRadius: 18, padding: "clamp(20px,2.5vw,28px) clamp(12px,1.5vw,20px)", display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                    <Icon kind={stat.icon} size={22} color={C.green} />
-                    <div style={{ fontSize: "clamp(18px,2.4vw,28px)", fontWeight: 800, color: C.green, lineHeight: 1, letterSpacing: -0.5, fontVariantNumeric: "tabular-nums" }}>{stat.value}</div>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: 0.8, textTransform: "uppercase", textAlign: "center" }}>{stat.label}</div>
-                  </div>
-                ))}
+              <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(27,245,97,0.06)", border: "1px solid rgba(27,245,97,0.2)", borderRadius: 100, padding: "12px 24px", marginBottom: 40 }}>
+                <Icon kind="check" size={20} color={C.green} />
+                <span style={{ fontSize: 14, fontWeight: 700, color: C.white }}>100% of every round-up goes to the cause</span>
               </div>
-              <a className="btn btn-primary" href="#">Learn About the Project <Icon kind="arrow" size={14} color={C.dark} /></a>
+              <div>
+                <Link className="btn btn-primary" to="/project">Learn About the Project <Icon kind="arrow" size={14} color={C.dark} /></Link>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIALS */}
-      {/* TODO: Replace placeholder testimonials with real driver quotes (with consent) before launch */}
-      <section style={{ background: C.white, padding: "clamp(80px,10vw,140px) 0" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", marginBottom: 64 }}>
-            <div className="label-pill" style={{ background: "rgba(27,245,97,0.08)", color: C.darkGreen, marginBottom: 20, padding: "6px 14px" }}>DRIVER STORIES</div>
-            <h2 className="h1" style={{ color: C.dark }}>Trusted by Ghana's drivers.</h2>
-          </div>
-          <div className="grid grid-3">
-            {[{ quote: "I save 2 cedis on every kWh as a member. Over a month that\u2019s real money in my pocket. The app makes it easy.", name: "Kwame A.", role: "Bolt Driver, Accra" },{ quote: "Used to wait an hour at other stations. At Nehemiah Gate I\u2019m in and out in 30 minutes. The lounge has AC and Wi-Fi too.", name: "Ama O.", role: "Delivery Rider" },{ quote: "Reliable, clean, professional. You can tell they actually care about getting it right. Built proper for Ghana.", name: "David M.", role: "EV Owner" }].map((t, i) => (
-              <div key={i} className="card">
-                <div aria-label="5 out of 5 stars" style={{ display: "flex", gap: 4, marginBottom: 18 }}>{[...Array(5)].map((_, j) => <Icon key={j} kind="star" size={18} color={C.green} />)}</div>
-                <p style={{ fontSize: 15, color: C.dark, lineHeight: 1.6, marginBottom: 24, fontWeight: 500 }}>{"\u201C"}{t.quote}{"\u201D"}</p>
-                <div style={{ paddingTop: 20, borderTop: `1px solid ${C.border}` }}>
-                  <div style={{ fontSize: 14, fontWeight: 800, color: C.dark }}>{t.name}</div>
-                  <div style={{ fontSize: 12, color: C.muted, marginTop: 2 }}>{t.role}</div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -483,13 +485,13 @@ export default function NehemiahLanding() {
       </section>
 
       {/* FINAL CTA */}
-      <section style={{ background: `linear-gradient(175deg, ${C.dark} 0%, ${C.darkBg} 100%)`, padding: "clamp(80px,10vw,140px) 0", position: "relative", overflow: "hidden" }}>
+      <section id="download" style={{ background: `linear-gradient(175deg, ${C.dark} 0%, ${C.darkBg} 100%)`, padding: "clamp(80px,10vw,140px) 0", position: "relative", overflow: "hidden" }}>
         <Pattern color={C.green} opacity={0.05} rows={8} cols={12} />
         <div aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 800, borderRadius: "50%", background: `radial-gradient(circle, ${C.green}15 0%, transparent 60%)`, pointerEvents: "none" }} />
         <div className="container" style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
-          <div className="label-pill" style={{ background: "rgba(27,245,97,0.1)", border: "1px solid rgba(27,245,97,0.25)", color: C.green, marginBottom: 24 }}>READY WHEN YOU ARE</div>
+          <div className="label-pill" style={{ background: "rgba(27,245,97,0.1)", border: "1px solid rgba(27,245,97,0.25)", color: C.green, marginBottom: 24 }}>COMING SOON</div>
           <h2 className="h-display" style={{ color: C.white, maxWidth: 900, margin: "0 auto 24px" }}>Ready to power<br />your <span style={{ color: C.green }}>journey?</span></h2>
-          <p className="body-lg" style={{ color: "rgba(255,255,255,0.65)", maxWidth: 540, margin: "0 auto 44px" }}>Download the Nehemiah Energy app. Find your nearest charging station. Charge in about 30 minutes. Built for the driver. Built in Ghana.</p>
+          <p className="body-lg" style={{ color: "rgba(255,255,255,0.65)", maxWidth: 540, margin: "0 auto 44px" }}>The Nehemiah Energy app is launching soon. Find your nearest charging station, charge in about 30 minutes, and earn rewards. Built for the driver. Built in Ghana.</p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}><AppBadge store="apple" /><AppBadge store="google" /></div>
         </div>
       </section>

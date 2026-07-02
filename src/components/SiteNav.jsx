@@ -22,14 +22,39 @@ function NMark({ size = 32 }) {
 
 const NAV_LINKS = [
   { label: "Home", to: "/", isRouter: true },
-  { label: "Stations", to: "#stations", isRouter: false },
+  { label: "Stations", to: "/#stations", isRouter: true },
   { label: "About", to: "/about", isRouter: true },
   { label: "Project", to: "/project", isRouter: true },
   { label: "Contact", to: "/contact", isRouter: true },
 ];
 
+const ctaStyle = {
+  display: "inline-flex",
+  alignItems: "center",
+  gap: 8,
+  padding: "14px 22px",
+  borderRadius: 12,
+  fontSize: 14,
+  fontWeight: 700,
+  background: `linear-gradient(135deg, ${C.green}, ${C.darkGreen})`,
+  color: C.dark,
+  boxShadow: "0 6px 20px rgba(27,245,97,0.25)",
+  textDecoration: "none",
+  whiteSpace: "nowrap",
+  transition: "transform 0.15s ease, box-shadow 0.2s ease",
+};
+
+function ArrowIcon() {
+  return (
+    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M5 12h14M13 6l6 6-6 6" stroke={C.dark} strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -38,6 +63,7 @@ export default function SiteNav() {
     handler();
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
 
   const isActive = (link) => {
     if (link.to === "/" && location.pathname === "/") return true;
@@ -129,48 +155,63 @@ export default function SiteNav() {
           )}
         </div>
 
-        <a
-          href="#"
+        <Link to="/#download" className="site-nav-cta-desktop" style={ctaStyle}>
+          Get the App <ArrowIcon />
+        </Link>
+
+        <button
+          type="button"
+          className="site-nav-toggle"
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          style={{ background: "none", border: "none", padding: 6, cursor: "pointer", display: "none", alignItems: "center" }}
+        >
+          <svg width={28} height={28} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            {menuOpen ? (
+              <path d="M6 6l12 12M18 6L6 18" stroke={C.white} strokeWidth="2.2" strokeLinecap="round" />
+            ) : (
+              <path d="M4 7h16M4 12h16M4 17h16" stroke={C.white} strokeWidth="2.2" strokeLinecap="round" />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile menu panel */}
+      {menuOpen && (
+        <div
           style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 8,
-            padding: "14px 22px",
-            borderRadius: 12,
-            fontSize: 14,
-            fontWeight: 700,
-            background: `linear-gradient(135deg, ${C.green}, ${C.darkGreen})`,
-            color: C.dark,
-            boxShadow: "0 6px 20px rgba(27,245,97,0.25)",
-            textDecoration: "none",
-            whiteSpace: "nowrap",
-            transition: "transform 0.15s ease, box-shadow 0.2s ease",
+            background: "rgba(1,15,18,0.97)",
+            backdropFilter: "blur(20px) saturate(180%)",
+            WebkitBackdropFilter: "blur(20px) saturate(180%)",
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            padding: "8px 24px 20px",
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
           }}
         >
-          Get the App
-          <svg
-            width={14}
-            height={14}
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-            style={{ flexShrink: 0 }}
-          >
-            <path
-              d="M5 12h14M13 6l6 6-6 6"
-              stroke={C.dark}
-              strokeWidth="2.5"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </a>
-      </div>
+          {NAV_LINKS.map((link) => (
+            <Link key={link.label} to={link.to} onClick={() => setMenuOpen(false)} style={{ ...navLinkStyle(isActive(link)), padding: "13px 4px", fontSize: 16 }}>
+              {link.label}
+            </Link>
+          ))}
+          <Link to="/#download" onClick={() => setMenuOpen(false)} style={{ ...ctaStyle, justifyContent: "center", marginTop: 12 }}>
+            Get the App <ArrowIcon />
+          </Link>
+        </div>
+      )}
 
       <style>{`
         .site-nav-desktop-links { display: none; }
-        @media (min-width: 900px) { .site-nav-desktop-links { display: flex; } }
+        .site-nav-cta-desktop { display: none !important; }
+        @media (min-width: 900px) {
+          .site-nav-desktop-links { display: flex; }
+          .site-nav-cta-desktop { display: inline-flex !important; }
+        }
+        @media (max-width: 899px) {
+          .site-nav-toggle { display: inline-flex !important; }
+        }
       `}</style>
     </nav>
   );

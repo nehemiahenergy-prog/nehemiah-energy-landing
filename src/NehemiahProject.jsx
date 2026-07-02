@@ -11,6 +11,9 @@ const C = {
 
 // TODO: Replace with real Paystack public key before launch
 const PAYSTACK_PUBLIC_KEY = "pk_test_REPLACE_WITH_YOUR_REAL_PAYSTACK_PUBLIC_KEY";
+// Donations are not live yet (no backend / live Paystack key). Flip to true once
+// a real key is set and the payment flow is verified end to end.
+const DONATIONS_LIVE = false;
 
 const SOLAR_KIT_IMG = "/images/nehemiah-solar-kit.jpg";
 const SCHOOL_IMG = "/images/marcoff-orphanage.jpg";
@@ -80,6 +83,7 @@ export default function NehemiahProject() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
   useEffect(() => {
+    if (!DONATIONS_LIVE) return;
     if (typeof document === "undefined") return;
     if (document.querySelector('script[src*="js.paystack.co"]')) return;
     const script = document.createElement("script");
@@ -92,6 +96,10 @@ export default function NehemiahProject() {
   const finalAmount = customAmount ? parseFloat(customAmount) : donationAmount;
 
   const handleDonate = () => {
+    if (!DONATIONS_LIVE) {
+      alert("Online donations are opening soon!\n\nWe're putting the finishing touches on secure payments. In the meantime, email support@nehemiahenergy.com to donate or partner with the Nehemiah Project. Thank you for your support.");
+      return;
+    }
     if (!email || !email.includes("@") || !email.includes(".")) { alert("Please enter a valid email address so we can send your donation receipt."); return; }
     if (!finalAmount || isNaN(finalAmount) || finalAmount < 1) { alert("Please choose a donation amount of at least GHS 1."); return; }
     if (PAYSTACK_PUBLIC_KEY.includes("REPLACE_WITH")) { alert("PREVIEW MODE\n\nIn production, this opens the Paystack popup with:\n\n  Email: " + email + "\n  Amount: GHS " + finalAmount.toFixed(2) + "\n\nTo enable real payments, replace PAYSTACK_PUBLIC_KEY with your real key."); return; }
@@ -190,17 +198,12 @@ export default function NehemiahProject() {
           <Pattern color={C.green} opacity={0.04} rows={8} cols={12} />
           <div aria-hidden="true" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 800, height: 800, borderRadius: "50%", background: `radial-gradient(circle, ${C.green}13 0%, transparent 60%)`, pointerEvents: "none" }} />
           <div className="container" style={{ position: "relative", zIndex: 2, textAlign: "center" }}>
-            <div className="label-pill" style={{ background: "rgba(27,245,97,0.1)", border: "1px solid rgba(27,245,97,0.25)", color: C.green, marginBottom: 24 }}>OUR IMPACT SO FAR</div>
+            <div className="label-pill" style={{ background: "rgba(27,245,97,0.1)", border: "1px solid rgba(27,245,97,0.25)", color: C.green, marginBottom: 24 }}>OUR PLEDGE</div>
             <h2 className="h-display" style={{ color: C.white, maxWidth: 900, margin: "0 auto 24px" }}>Small numbers.<br /><span style={{ color: C.green }}>Real futures.</span></h2>
-            <p className="body-lg" style={{ color: "rgba(255,255,255,0.65)", maxWidth: 620, margin: "0 auto 64px" }}>We are just getting started. Every cedi raised, every kid reached, every classroom lit {"\u2014"} these numbers grow with every charge.</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16, maxWidth: 900, margin: "0 auto" }}>
-              {[{ icon: "heart", value: "GHS 4,280", label: "Total Raised" },{ icon: "person", value: "342", label: "Kids Helped" },{ icon: "check", value: "100%", label: "To the Cause" }].map((stat, i) => (
-                <div key={i} style={{ background: "rgba(27,245,97,0.04)", border: "1px solid rgba(27,245,97,0.18)", borderRadius: 20, padding: "clamp(24px,3vw,36px) clamp(12px,2vw,24px)", display: "flex", flexDirection: "column", alignItems: "center", gap: 14 }}>
-                  <Icon kind={stat.icon} size={28} color={C.green} />
-                  <div style={{ fontSize: "clamp(24px,3.6vw,44px)", fontWeight: 800, color: C.green, lineHeight: 1, letterSpacing: -0.5, fontVariantNumeric: "tabular-nums" }}>{stat.value}</div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: 0.8, textTransform: "uppercase", textAlign: "center" }}>{stat.label}</div>
-                </div>
-              ))}
+            <p className="body-lg" style={{ color: "rgba(255,255,255,0.65)", maxWidth: 620, margin: "0 auto 40px" }}>We are just getting started. Once Nehemiah Gate opens, every cedi raised and every classroom lit will grow with every charge {"\u2014"} and we will share our impact numbers right here as they do.</p>
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "rgba(27,245,97,0.06)", border: "1px solid rgba(27,245,97,0.2)", borderRadius: 100, padding: "14px 28px" }}>
+              <Icon kind="check" size={22} color={C.green} />
+              <span style={{ fontSize: 15, fontWeight: 700, color: C.white }}>100% of every round-up and donation goes to the cause</span>
             </div>
           </div>
         </section>
@@ -336,7 +339,7 @@ export default function NehemiahProject() {
                   <input type="email" placeholder="Your email (for receipt)" value={email} onChange={e => setEmail(e.target.value)} style={{ flex: 1, background: "transparent", border: "none", outline: "none", color: C.white, fontSize: 15, fontWeight: 600, fontFamily: "inherit" }} />
                 </div>
                 <button className="btn btn-primary" onClick={handleDonate} disabled={isProcessing} style={{ width: "100%", justifyContent: "center", padding: "16px 22px", fontSize: 15, opacity: isProcessing ? 0.7 : 1, cursor: isProcessing ? "wait" : "pointer" }}>
-                  {isProcessing ? "Processing..." : <>Donate GHS {finalAmount || 0} <Icon kind="arrow" size={14} color={C.dark} /></>}
+                  {isProcessing ? "Processing..." : DONATIONS_LIVE ? <>Donate GHS {finalAmount || 0} <Icon kind="arrow" size={14} color={C.dark} /></> : <>Donations Opening Soon <Icon kind="arrow" size={14} color={C.dark} /></>}
                 </button>
               </div>
               {/* Round Up */}
@@ -352,7 +355,7 @@ export default function NehemiahProject() {
                   <div style={{ height: 1, background: "rgba(255,255,255,0.08)", margin: "10px 0" }} />
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><span style={{ fontSize: 14, fontWeight: 700, color: C.green }}>To the Project</span><span style={{ fontSize: 17, fontWeight: 800, color: C.green }}>+ GHS 0.60</span></div>
                 </div>
-                <button className="btn btn-primary" style={{ width: "100%", justifyContent: "center", padding: "16px 22px", fontSize: 15 }}>Get the App <Icon kind="smartphone" size={14} color={C.dark} /></button>
+                <button className="btn btn-primary" disabled style={{ width: "100%", justifyContent: "center", padding: "16px 22px", fontSize: 15, opacity: 0.6, cursor: "default" }}>App Coming Soon <Icon kind="smartphone" size={14} color={C.dark} /></button>
               </div>
             </div>
           </div>

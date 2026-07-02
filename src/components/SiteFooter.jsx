@@ -52,8 +52,8 @@ const FOOTER_COLUMNS = [
   {
     title: "PRODUCT",
     links: [
-      { text: "Find Stations", href: "#stations" },
-      { text: "Get the App", href: "#" },
+      { text: "Find Stations", href: "/#stations", isRouter: true },
+      { text: "Get the App", href: "/#download", isRouter: true },
     ],
   },
   {
@@ -75,7 +75,12 @@ const FOOTER_COLUMNS = [
   },
 ];
 
-const SOCIALS = ["instagram", "twitter", "facebook", "linkedin"];
+const SOCIALS = [
+  { kind: "instagram", url: "https://instagram.com/nehemiahenergy" },
+  { kind: "twitter", url: "https://x.com/nehemiahenergy" },
+  { kind: "facebook", url: "https://facebook.com/nehemiahenergy" },
+  { kind: "linkedin", url: "https://linkedin.com/company/nehemiah-energy" },
+];
 
 const linkStyle = { fontSize: 14, color: "rgba(255,255,255,0.6)", textDecoration: "none" };
 
@@ -99,8 +104,8 @@ export default function SiteFooter() {
             </p>
             <div style={{ display: "flex", gap: 10 }}>
               {SOCIALS.map((s) => (
-                <a key={s} href="#" aria-label={`Nehemiah Energy on ${s}`} style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s ease" }}>
-                  <SocialIcon kind={s} size={18} color="rgba(255,255,255,0.7)" />
+                <a key={s.kind} href={s.url} target="_blank" rel="noopener noreferrer" aria-label={`Nehemiah Energy on ${s.kind}`} style={{ width: 40, height: 40, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s ease" }}>
+                  <SocialIcon kind={s.kind} size={18} color="rgba(255,255,255,0.7)" />
                 </a>
               ))}
             </div>

@@ -94,8 +94,14 @@ export default function NehemiahContact() {
     if (!formData.message.trim() || formData.message.trim().length < 10) { alert("Please write a message of at least 10 characters."); return; }
 
     if (IS_PREVIEW_MODE) {
+      // Contact form backend isn't live yet — hand off to the user's email client
+      // with their message pre-filled so nothing feels broken.
       const inboxMap = { general: "support@nehemiahenergy.com", support: "support@nehemiahenergy.com", careers: "careers@nehemiahenergy.com", partnerships: "partnerships@nehemiahenergy.com" };
-      alert("PREVIEW MODE\n\nIn production, this submits to " + CONTACT_ENDPOINT + " and routes to:\n\n  " + inboxMap[formData.topic] + "\n\nFrom: " + formData.name + " <" + formData.email + ">\nTopic: " + formData.topic + "\nMessage: " + formData.message.substring(0, 100) + (formData.message.length > 100 ? "..." : "") + "\n\nSet IS_PREVIEW_MODE to false to enable real submissions.");
+      const to = inboxMap[formData.topic] || "support@nehemiahenergy.com";
+      const subject = encodeURIComponent(`[${formData.topic}] Message from ${formData.name}`);
+      const body = encodeURIComponent(`${formData.message}\n\n— ${formData.name} (${formData.email})`);
+      window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+      setSubmitStatus("success");
       return;
     }
 
@@ -208,7 +214,7 @@ export default function NehemiahContact() {
                   <div style={{ marginBottom: 18 }}><label className="input-label" htmlFor="contact-email">Your email</label><input id="contact-email" className="input" type="email" placeholder="you@example.com" value={formData.email} onChange={e => handleChange("email", e.target.value)} required /></div>
                   <div style={{ marginBottom: 18 }}><label className="input-label" htmlFor="contact-topic">What is this about?</label><select id="contact-topic" className="input" value={formData.topic} onChange={e => handleChange("topic", e.target.value)}><option value="general">General Inquiry</option><option value="support">Customer Support</option><option value="careers">Careers / Job Application</option><option value="partnerships">Partnerships</option></select></div>
                   <div style={{ marginBottom: 24 }}><label className="input-label" htmlFor="contact-message">Your message</label><textarea id="contact-message" className="input" placeholder="Tell us what is on your mind..." value={formData.message} onChange={e => handleChange("message", e.target.value)} required rows={6} /></div>
-                  {submitStatus === "success" && (<div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", background: "rgba(27,245,97,0.1)", border: `1px solid ${C.green}40`, borderRadius: 12, marginBottom: 18 }}><Icon kind="check" size={18} color={C.darkGreen} /><span style={{ fontSize: 14, fontWeight: 600, color: C.darkGreen }}>Message sent. We will reply soon.</span></div>)}
+                  {submitStatus === "success" && (<div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", background: "rgba(27,245,97,0.1)", border: `1px solid ${C.green}40`, borderRadius: 12, marginBottom: 18 }}><Icon kind="check" size={18} color={C.darkGreen} /><span style={{ fontSize: 14, fontWeight: 600, color: C.darkGreen }}>Opening your email app to send your message. If nothing opens, email support@nehemiahenergy.com.</span></div>)}
                   {submitStatus === "error" && (<div style={{ display: "flex", alignItems: "center", gap: 12, padding: "14px 18px", background: "rgba(245,158,11,0.1)", border: "1px solid #F59E0B40", borderRadius: 12, marginBottom: 18 }}><Icon kind="warning" size={18} color="#92400E" /><span style={{ fontSize: 14, fontWeight: 600, color: "#92400E" }}>Something went wrong. Please try again or email us directly.</span></div>)}
                   <button type="submit" className="btn btn-primary" disabled={isSubmitting} style={{ width: "100%", justifyContent: "center", padding: "16px 22px", fontSize: 15, opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? "wait" : "pointer" }}>
                     {isSubmitting ? "Sending..." : <>Send Message <Icon kind="send" size={14} color={C.dark} /></>}
