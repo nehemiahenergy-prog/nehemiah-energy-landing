@@ -1173,7 +1173,7 @@ export default function NehemiahAbout() {
                 { icon: "users", value: "50+", label: "Active Drivers" },
                 { icon: "bolt", value: "30", suffix: "min", label: "Avg Charge Time" },
                 { icon: "pin", value: "1", label: "Station Live" },
-                { icon: "globe", value: "120", suffix: "kW", label: "DC Fast Charging" },
+                { icon: "globe", value: "2", label: "Charging Guns" },
               ].map((stat, i) => (
                 <FadeSection key={i} delay={i * 0.08}>
                   <div
